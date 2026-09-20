@@ -3,7 +3,13 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Button, buttonVariants, Separator, toast } from "@heroui/react";
+import {
+  Button,
+  buttonVariants,
+  Separator,
+  toast,
+  Tooltip,
+} from "@heroui/react";
 import {
   FaGithub as GithubIcon,
   FaGoogle as GoogleIcon,
@@ -30,11 +36,6 @@ export default function LoginPage() {
         { provider },
         {
           onSuccess: () => {
-            toast("Login successfull !", {
-              timeout: 4000,
-              variant: "success",
-            });
-
             redirect(ROUTES.dashboard);
           },
           onError: ({ error }) => {
@@ -47,14 +48,14 @@ export default function LoginPage() {
         },
       )
       .finally(() => {
-        setIsLoading(true);
+        setIsLoading(false);
       });
   };
 
   return (
     <div className="h-[95vh] flex flex-col items-center justify-center relative">
       <div className="absolute top-4 left-4">
-      <Logo />
+        <Logo />
       </div>
 
       <div className="flex flex-col items-center justify-center my-auto space-y-6 relative">
@@ -89,7 +90,7 @@ export default function LoginPage() {
             <Button
               variant="tertiary"
               className={"w-full border-2 border-accent-foreground"}
-              onClick={() => oauthSignin}
+              onClick={() => oauthSignin("google")}
               isDisabled={isLoading}
             >
               <GoogleIcon className="size-4" />
@@ -102,16 +103,30 @@ export default function LoginPage() {
             >
               <GithubIcon className="size-4" />
             </Button>
-            <Button
-              variant="tertiary"
-              className={"w-full border-2 border-accent-foreground"}
-              onClick={() => oauthSignin("spotify")}
-              isDisabled={isLoading}
-            >
-              <SpotifyIcon className="size-4" />
-            </Button>
+            {/* Spotify login disabled for now */}
+            <Tooltip delay={0}>
+              <Tooltip.Trigger className="w-full">
+                <Button
+                  variant="tertiary"
+                  className={"w-full border-2 border-accent-foreground"}
+                  onClick={() => oauthSignin("spotify")}
+                  isDisabled={true}
+                >
+                  <SpotifyIcon className="size-4" />
+                </Button>
+              </Tooltip.Trigger>
+              <Tooltip.Content
+                showArrow={true}
+                className={"text-danger font-semibold"}
+              >
+                <Tooltip.Arrow />
+                Spotify signin coming soon !!
+              </Tooltip.Content>
+            </Tooltip>
           </div>
-          <Separator dir="horizontal" className="w-80 bg-muted" />
+
+          <Separator dir="horizontal" className="w-full bg-muted" />
+
           <AuthFormTab />
         </motion.div>
       </div>
