@@ -37,7 +37,7 @@ export function Footer() {
         <div className="space-y-2">
           <Logo />
           <p className="">
-            Built to make classroom attendance faster, <br /> and harder to
+            Built to make classroom attendance faster, and harder to
             fake.
           </p>
         </div>
