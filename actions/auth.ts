@@ -14,26 +14,39 @@ export const signupwithEmailAction = async ({
   password: string;
   name: string;
 }) => {
-  await auth.api
-    .signUpEmail({
-      body: {
-        email,
-        password,
-        name,
-      },
-    })
-    .then(() => redirect(ROUTES.dashboard));
+  await auth.api.signUpEmail({
+    body: {
+      email,
+      password,
+      name,
+    },
+  });
 };
 
-export const signinWithOAuthAction = async (provider: string) => {
-  await auth.api
-    .signInSocial({
-      body: {
-        provider,
-      },
-    })
-    .then(() => redirect(ROUTES.dashboard));
+export const loginwithEmailAction = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
+  await auth.api.signInEmail({
+    body: {
+      email,
+      password,
+    },
+  });
 };
+
+// export const signinWithOAuthAction = async (provider: string) => {
+//   await auth.api
+//     .signInSocial({
+//       body: {
+//         provider,
+//       },
+//     })
+//     .then(() => redirect(ROUTES.dashboard));
+// };
 
 export const signoutAction = async () => {
   await auth.api

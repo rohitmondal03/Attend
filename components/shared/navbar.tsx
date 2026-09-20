@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
-import { FileSpreadsheetIcon } from "lucide-react";
 import { buttonVariants } from "@heroui/styles";
 import { ROUTES } from "@/lib/routes";
+import { Logo } from "./logo";
+import { ArrowUpRightIcon } from "lucide-react";
 
 const NAV_LINKS = [
   {
@@ -12,12 +13,14 @@ const NAV_LINKS = [
     path: ROUTES.home,
   },
   {
-    title: "SignIn",
-    path: ROUTES.signin,
+    title: "Features",
+    path: ROUTES.featuresSection,
   },
   {
-    title: "Features",
-    path: "/#features",
+    title: "Get Started",
+    path: ROUTES.dashboard,
+    type: "bold",
+    logo: ArrowUpRightIcon,
   },
 ];
 
@@ -29,7 +32,7 @@ export function Navbar() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ ease: "easeInOut", delay: 1 }}
     >
-      <FileSpreadsheetIcon className="size-8" />
+      <Logo />
 
       <nav className="flex items-center justify-center gap-4">
         {NAV_LINKS.map((link) => (
@@ -37,11 +40,13 @@ export function Navbar() {
             key={link.path}
             href={link.path}
             className={buttonVariants({
-              variant: "ghost",
-              className: "font-semibold text-base",
+              variant: link.type === "bold" ? "primary" : "outline",
+              size: "sm",
+              className: "font-semibold text-sm border-2 border-transparent hover:border-accent-foreground/50 transition-all ease-linear",
             })}
           >
             {link.title}
+            {link.logo && <link.logo className="size-4" />}
           </Link>
         ))}
       </nav>

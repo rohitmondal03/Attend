@@ -8,13 +8,15 @@ import {
   CrossIcon,
   RefreshCcwIcon,
   ScanQrCodeIcon,
-  LogInIcon,
   ShieldCheckIcon,
   RadioIcon,
   FileSpreadsheetIcon,
   SmartphoneIcon,
+  ArrowRightIcon,
 } from "lucide-react";
+import { ROUTES } from "@/lib/routes";
 import { Navbar } from "@/components/shared/navbar";
+import { Footer } from "@/components/shared/footer";
 
 const WORKING_DETAILS = [
   {
@@ -94,11 +96,11 @@ function FeatureCard({
       >
         <Card
           className={cn(
-            "h-64 sm:h-72 w-full p-8 border-2 border-border bg-surface shadow-2xl rounded-3xl flex flex-col justify-between",
+            "h-fit w-full p-8 border-2 border-border bg-surface shadow-2xl rounded-3xl flex flex-col justify-between",
             className,
           )}
         >
-          <div>
+          <div className="flex flex-col justify-center gap-4">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
                 <div className="p-2.5 rounded-xl bg-accent/15 border border-accent/20">
@@ -153,7 +155,7 @@ export default function HomePage() {
           transition={{ delay: 0.6 }}
         >
           <p className="font-semibold text-2xl">
-            Generate a QR, project it, done !
+            Generate a QR, Show it, Done !
           </p>
           <p className="text-lg">
             Students scan, mark themselves present, and you get a live list — no
@@ -171,17 +173,17 @@ export default function HomePage() {
             className={buttonVariants({
               size: "lg",
               variant: "primary",
-              className: "font-bold text-lg",
+              className: "font-bold text-lg px-8 py-6 group transition-all ease-out",
             })}
           >
-            <LogInIcon className="size-5 mr-2" />
             Login as Teacher
+            <ArrowRightIcon className="size-6 transition-all ease-in duration-200 group-hover:-rotate-45 group-hover:scale-[1.1]" />
           </Link>
         </motion.div>
       </section>
 
       {/* How it works section */}
-      <section className="space-y-12">
+      <section className="space-y-12" id="how_it_works">
         <motion.h1
           className="text-4xl text-center font-bold text-accent bg-accent-foreground w-fit mx-auto px-3 py-1 rounded-lg"
           initial={{ opacity: 0, y: 20 }}
@@ -266,17 +268,20 @@ export default function HomePage() {
           </p>
         </div>
         <Link
-          href={"/login"}
+          href={ROUTES.dashboard}
           className={buttonVariants({
             size: "lg",
             variant: "primary",
-            className: "font-bold text-lg",
+            className: "font-bold text-lg px-8 py-6 group hover:space-x-2 transition-all ease-in duration-150 w-fit",
           })}
         >
-          <LogInIcon className="size-5 mr-2" />
           Get Started
+          <ArrowRightIcon className="size-0 opacity-0 transition-all duration-300 group-hover:size-6 group-hover:opacity-100" />
         </Link>
       </section>
+
+      {/* Footer section */}
+      <Footer />
     </div>
   );
 }
