@@ -24,5 +24,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard", "/signin"], // adjust /signin to match your actual ROUTES.signin path
+  matcher: ["/dashboard/:path*", "/signin"], // adjust /signin to match your actual ROUTES.signin path
 };
