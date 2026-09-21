@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Attend
 
-## Getting Started
+A QR-based attendance system built for real classrooms — designed specifically to stop proxy attendance, not just digitize the register.
 
-First, run the development server:
+Teachers create a session and project a QR code on screen. Students scan it, enter their roll number and name, and are marked present instantly. The QR code **rotates every 10 seconds**, so a screenshot shared in a group chat is already useless by the time anyone tries to use it.
+
+## The problem
+
+Standard QR-based attendance systems are trivially gameable — one student scans, shares a screenshot, and half the absent class marks itself present. Attend is built around closing that specific gap, not just replacing a paper register with a digital one.
+
+## Features
+
+- **Rotating QR codes** — regenerated every 10 seconds using a time-windowed signed token, so static screenshots expire almost immediately
+- **Live attendance tracking** — teachers see names appear in real time as students scan
+- **No app required for students** — scan and submit via browser, nothing to install
+- **Duplicate-proof** — one submission per roll number per session, enforced at the database level
+- **Session expiry** — attendance can only be marked within the session's actual time window
+- **CSV export** — one-click download of any session's attendance record
+- **Teacher authentication** — email/password and OAuth (Google, GitHub) sign-in
+- **Upcoming:**
+    - Spotify OAuth
+
+## Tech stack
+
+- **Framework:** Next.js (App Router), TypeScript
+- **Database:** PostgreSQL (Supabase), via Prisma ORM
+- **Auth:** Better Auth (email/password + Google/GitHub OAuth)
+- **Styling:** Tailwind CSS, HeroUI (customized theme)
+<!-- - **QR generation:** `qrcode` -->
+
+## Getting started
+
+### Prerequisites
+
+- Node.js 18+
+- A PostgreSQL database (this project uses Supabase)
+
+### Installation
+
+```bash
+git clone https://github.com/rohitmondal03/Attend.git
+cd Attend
+npm install
+```
+
+### Environment variables
+
+Create a `.env` file in the root:
+
+```env
+# Database (Supabase)
+DATABASE_URL="postgresql://...pooler.supabase.com:6543/postgres?pgbouncer=true"
+DIRECT_URL="postgresql://...pooler.supabase.com:5432/postgres"
+
+# Better Auth
+BETTER_AUTH_SECRET="your-generated-secret"
+BETTER_AUTH_URL="http://localhost:3000"
+
+# OAuth providers
+GOOGLE_CLIENT_ID="..."
+GOOGLE_CLIENT_SECRET="..."
+GITHUB_CLIENT_ID="..."
+GITHUB_CLIENT_SECRET="..."
+```
+
+### Database setup
+
+```bash
+npx prisma migrate dev
+npx prisma generate
+```
+
+### Run the dev server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How it works
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Teacher creates a session** — subject, batch, date, and class timing
+2. **QR code generates and rotates** — a new signed token every 10 seconds, encoding the session in a way that expires almost immediately
+3. **Student scans and confirms** — a quick form (roll number + name), validated server-side against the active session window
 
-## Learn More
+## Project status
 
-To learn more about Next.js, take a look at the following resources:
+This is an active portfolio project, built incrementally and not yet deployed for live use. Contributions, feedback, and issue reports are welcome.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<!-- ## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT -->
