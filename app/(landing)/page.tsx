@@ -169,7 +169,7 @@ export default function HomePage() {
           transition={{ delay: 0.9 }}
         >
           <Link
-            href={"/login"}
+            href={ROUTES.signin}
             className={buttonVariants({
               size: "lg",
               variant: "primary",

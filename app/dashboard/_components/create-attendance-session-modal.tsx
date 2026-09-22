@@ -40,9 +40,9 @@ export function CreateAttendanceSessionModal({
                 onSubmit={() => {}}
                 className="grid grid-cols-2 gap-x-4 gap-y-6"
               >
-                <TextField isRequired name="class_name" type="text">
+                <TextField isRequired name="subject" type="text" className={"col-span-2"}>
                   <Label className="font-semibold">Subject</Label>
-                  <Select placeholder="Select subject">
+                  <Select isRequired placeholder="Select subject">
                     <Select.Trigger>
                       <Select.Value />
                       <Select.Indicator />
@@ -64,13 +64,14 @@ export function CreateAttendanceSessionModal({
                       </ListBox>
                     </Select.Popover>
                     <Description>Select subject</Description>
+                    <FieldError>Please select a valid subject</FieldError>
                   </Select>
                 </TextField>
-                <TextField isRequired name="class_name" type="text">
+                <TextField isRequired name="class_name" type="text" className={"col-span-2"}>
                   <Label className="font-semibold">Class Name</Label>
                   <Input placeholder="Center 3, Room 5241" />
                   <Description>Enter class location</Description>
-                  <FieldError />
+                  <FieldError>Please enter a valid class name</FieldError>
                 </TextField>
                 <TimeField isRequired name="class_start_time">
                   <Label className="font-semibold">Class Start Time</Label>
@@ -80,7 +81,7 @@ export function CreateAttendanceSessionModal({
                     </TimeField.Input>
                   </TimeField.Group>
                   <Description>Class start time</Description>
-                  <FieldError />
+                  <FieldError>Please enter a valid class start time</FieldError>
                 </TimeField>
                 <TimeField isRequired name="class_end_time">
                   <Label className="font-semibold">Class End Time</Label>
@@ -90,20 +91,17 @@ export function CreateAttendanceSessionModal({
                     </TimeField.Input>
                   </TimeField.Group>
                   <Description>Class end time</Description>
-                  <FieldError />
+                  <FieldError>Please enter a valid class end time</FieldError>
                 </TimeField>
-                <Button
-                  type="submit"
-                  className={"font-semibol w-full col-span-2"}
-                >
+                <Button type="submit" className={"font-semibold w-full col-span-2"}>
                   <PlusIcon />
-                  Create
+                  Create Attendance Session
                 </Button>
               </Form>
             </Modal.Body>
             <Modal.Footer className="mb-0">
-              <Button variant="danger-soft" onClick={() => onClose()}>
-                Cancel
+              <Button variant="danger-soft" onPress={() => onClose()}>
+                Close
               </Button>
             </Modal.Footer>
             <Modal.CloseTrigger />

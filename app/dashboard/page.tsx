@@ -1,3 +1,6 @@
+import { headers } from "next/headers";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 import { Table, Chip, Dropdown, Card, Separator } from "@heroui/react";
 import {
   LayersIcon,
@@ -8,7 +11,8 @@ import {
   EllipsisIcon,
   EyeIcon,
 } from "lucide-react";
-import Link from "next/link";
+import { auth } from "@/lib/auth";
+import { ROUTES } from "@/lib/routes";
 
 const DEMO_SESSIONS_TABLE = new Array(20).fill({
   subject: "AI Tools for Research",
@@ -19,11 +23,20 @@ const DEMO_SESSIONS_TABLE = new Array(20).fill({
   status: "Active",
 });
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const sessionData = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!sessionData || !sessionData.user) {
+    redirect(ROUTES.signin);
+  }
+
   return (
     <div className="space-y-12">
       <h1 className="text-3xl font-bold">
-        <span className="text-black/60">Welcome to your Dashboard,</span> Rohit
+        <span className="text-black/60">Welcome to your Dashboard,</span>{" "}
+        {sessionData.user.name}
       </h1>
 
       <section className="grid grid-cols-4 gap-4">
@@ -148,14 +161,12 @@ export default function DashboardPage() {
                     <Table.Cell>{data.time}</Table.Cell>
                     <Table.Cell>{data.attendanceCount}</Table.Cell>
                     <Table.Cell>
-                      <Chip variant="tertiary">{data.status}</Chip>
+                      <Chip color="accent">{data.status}</Chip>
                     </Table.Cell>
                     <Table.Cell>
                       <Dropdown>
                         <Dropdown.Trigger>
-                          {/* <Button variant="ghost"> */}
                           <EllipsisIcon />
-                          {/* </Button> */}
                         </Dropdown.Trigger>
                         <Dropdown.Popover>
                           <Dropdown.Menu className="font-bold">
