@@ -216,6 +216,8 @@ export type UserWhereInput = {
   displayUsername?: Prisma.StringNullableFilter<"User"> | string | null
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  course?: Prisma.CourseListRelationFilter
+  attendanceSession?: Prisma.AttendanceSessionListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -230,6 +232,8 @@ export type UserOrderByWithRelationInput = {
   displayUsername?: Prisma.SortOrderInput | Prisma.SortOrder
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
+  course?: Prisma.CourseOrderByRelationAggregateInput
+  attendanceSession?: Prisma.AttendanceSessionOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -247,6 +251,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   displayUsername?: Prisma.StringNullableFilter<"User"> | string | null
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  course?: Prisma.CourseListRelationFilter
+  attendanceSession?: Prisma.AttendanceSessionListRelationFilter
 }, "id" | "email" | "username">
 
 export type UserOrderByWithAggregationInput = {
@@ -291,6 +297,8 @@ export type UserCreateInput = {
   displayUsername?: string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  course?: Prisma.CourseCreateNestedManyWithoutTeacherInput
+  attendanceSession?: Prisma.AttendanceSessionCreateNestedManyWithoutTeacherInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -305,6 +313,8 @@ export type UserUncheckedCreateInput = {
   displayUsername?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  course?: Prisma.CourseUncheckedCreateNestedManyWithoutTeacherInput
+  attendanceSession?: Prisma.AttendanceSessionUncheckedCreateNestedManyWithoutTeacherInput
 }
 
 export type UserUpdateInput = {
@@ -319,6 +329,8 @@ export type UserUpdateInput = {
   displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  course?: Prisma.CourseUpdateManyWithoutTeacherNestedInput
+  attendanceSession?: Prisma.AttendanceSessionUpdateManyWithoutTeacherNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -333,6 +345,8 @@ export type UserUncheckedUpdateInput = {
   displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  course?: Prisma.CourseUncheckedUpdateManyWithoutTeacherNestedInput
+  attendanceSession?: Prisma.AttendanceSessionUncheckedUpdateManyWithoutTeacherNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -456,6 +470,34 @@ export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountsInput, Prisma.UserUpdateWithoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutAccountsInput>
 }
 
+export type UserCreateNestedOneWithoutAttendanceSessionInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAttendanceSessionInput, Prisma.UserUncheckedCreateWithoutAttendanceSessionInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAttendanceSessionInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAttendanceSessionNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAttendanceSessionInput, Prisma.UserUncheckedCreateWithoutAttendanceSessionInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAttendanceSessionInput
+  upsert?: Prisma.UserUpsertWithoutAttendanceSessionInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAttendanceSessionInput, Prisma.UserUpdateWithoutAttendanceSessionInput>, Prisma.UserUncheckedUpdateWithoutAttendanceSessionInput>
+}
+
+export type UserCreateNestedOneWithoutCourseInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCourseInput, Prisma.UserUncheckedCreateWithoutCourseInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCourseInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCourseNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCourseInput, Prisma.UserUncheckedCreateWithoutCourseInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCourseInput
+  upsert?: Prisma.UserUpsertWithoutCourseInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCourseInput, Prisma.UserUpdateWithoutCourseInput>, Prisma.UserUncheckedUpdateWithoutCourseInput>
+}
+
 export type UserCreateWithoutSessionsInput = {
   id: string
   name: string
@@ -467,6 +509,8 @@ export type UserCreateWithoutSessionsInput = {
   username?: string | null
   displayUsername?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  course?: Prisma.CourseCreateNestedManyWithoutTeacherInput
+  attendanceSession?: Prisma.AttendanceSessionCreateNestedManyWithoutTeacherInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -480,6 +524,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   username?: string | null
   displayUsername?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  course?: Prisma.CourseUncheckedCreateNestedManyWithoutTeacherInput
+  attendanceSession?: Prisma.AttendanceSessionUncheckedCreateNestedManyWithoutTeacherInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -509,6 +555,8 @@ export type UserUpdateWithoutSessionsInput = {
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  course?: Prisma.CourseUpdateManyWithoutTeacherNestedInput
+  attendanceSession?: Prisma.AttendanceSessionUpdateManyWithoutTeacherNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -522,6 +570,8 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  course?: Prisma.CourseUncheckedUpdateManyWithoutTeacherNestedInput
+  attendanceSession?: Prisma.AttendanceSessionUncheckedUpdateManyWithoutTeacherNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -535,6 +585,8 @@ export type UserCreateWithoutAccountsInput = {
   username?: string | null
   displayUsername?: string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  course?: Prisma.CourseCreateNestedManyWithoutTeacherInput
+  attendanceSession?: Prisma.AttendanceSessionCreateNestedManyWithoutTeacherInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -548,6 +600,8 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   username?: string | null
   displayUsername?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  course?: Prisma.CourseUncheckedCreateNestedManyWithoutTeacherInput
+  attendanceSession?: Prisma.AttendanceSessionUncheckedCreateNestedManyWithoutTeacherInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -577,6 +631,8 @@ export type UserUpdateWithoutAccountsInput = {
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  course?: Prisma.CourseUpdateManyWithoutTeacherNestedInput
+  attendanceSession?: Prisma.AttendanceSessionUpdateManyWithoutTeacherNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -590,6 +646,160 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  course?: Prisma.CourseUncheckedUpdateManyWithoutTeacherNestedInput
+  attendanceSession?: Prisma.AttendanceSessionUncheckedUpdateManyWithoutTeacherNestedInput
+}
+
+export type UserCreateWithoutAttendanceSessionInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  username?: string | null
+  displayUsername?: string | null
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  course?: Prisma.CourseCreateNestedManyWithoutTeacherInput
+}
+
+export type UserUncheckedCreateWithoutAttendanceSessionInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  username?: string | null
+  displayUsername?: string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  course?: Prisma.CourseUncheckedCreateNestedManyWithoutTeacherInput
+}
+
+export type UserCreateOrConnectWithoutAttendanceSessionInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAttendanceSessionInput, Prisma.UserUncheckedCreateWithoutAttendanceSessionInput>
+}
+
+export type UserUpsertWithoutAttendanceSessionInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAttendanceSessionInput, Prisma.UserUncheckedUpdateWithoutAttendanceSessionInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAttendanceSessionInput, Prisma.UserUncheckedCreateWithoutAttendanceSessionInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAttendanceSessionInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAttendanceSessionInput, Prisma.UserUncheckedUpdateWithoutAttendanceSessionInput>
+}
+
+export type UserUpdateWithoutAttendanceSessionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  course?: Prisma.CourseUpdateManyWithoutTeacherNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAttendanceSessionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  course?: Prisma.CourseUncheckedUpdateManyWithoutTeacherNestedInput
+}
+
+export type UserCreateWithoutCourseInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  username?: string | null
+  displayUsername?: string | null
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  attendanceSession?: Prisma.AttendanceSessionCreateNestedManyWithoutTeacherInput
+}
+
+export type UserUncheckedCreateWithoutCourseInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  username?: string | null
+  displayUsername?: string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  attendanceSession?: Prisma.AttendanceSessionUncheckedCreateNestedManyWithoutTeacherInput
+}
+
+export type UserCreateOrConnectWithoutCourseInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCourseInput, Prisma.UserUncheckedCreateWithoutCourseInput>
+}
+
+export type UserUpsertWithoutCourseInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCourseInput, Prisma.UserUncheckedUpdateWithoutCourseInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCourseInput, Prisma.UserUncheckedCreateWithoutCourseInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCourseInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCourseInput, Prisma.UserUncheckedUpdateWithoutCourseInput>
+}
+
+export type UserUpdateWithoutCourseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  attendanceSession?: Prisma.AttendanceSessionUpdateManyWithoutTeacherNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCourseInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayUsername?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  attendanceSession?: Prisma.AttendanceSessionUncheckedUpdateManyWithoutTeacherNestedInput
 }
 
 
@@ -600,11 +810,15 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
 export type UserCountOutputType = {
   sessions: number
   accounts: number
+  course: number
+  attendanceSession: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
+  course?: boolean | UserCountOutputTypeCountCourseArgs
+  attendanceSession?: boolean | UserCountOutputTypeCountAttendanceSessionArgs
 }
 
 /**
@@ -631,6 +845,20 @@ export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.AccountWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCourseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CourseWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAttendanceSessionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AttendanceSessionWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -644,6 +872,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   displayUsername?: boolean
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  course?: boolean | Prisma.User$courseArgs<ExtArgs>
+  attendanceSession?: boolean | Prisma.User$attendanceSessionArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -687,6 +917,8 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  course?: boolean | Prisma.User$courseArgs<ExtArgs>
+  attendanceSession?: boolean | Prisma.User$attendanceSessionArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -697,6 +929,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     accounts: Prisma.$AccountPayload<ExtArgs>[]
+    course: Prisma.$CoursePayload<ExtArgs>[]
+    attendanceSession: Prisma.$AttendanceSessionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1104,6 +1338,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  course<T extends Prisma.User$courseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$courseArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  attendanceSession<T extends Prisma.User$attendanceSessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$attendanceSessionArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendanceSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1580,6 +1816,54 @@ export type User$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
+}
+
+/**
+ * User.course
+ */
+export type User$courseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Course
+   */
+  select?: Prisma.CourseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Course
+   */
+  omit?: Prisma.CourseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseInclude<ExtArgs> | null
+  where?: Prisma.CourseWhereInput
+  orderBy?: Prisma.CourseOrderByWithRelationInput | Prisma.CourseOrderByWithRelationInput[]
+  cursor?: Prisma.CourseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CourseScalarFieldEnum | Prisma.CourseScalarFieldEnum[]
+}
+
+/**
+ * User.attendanceSession
+ */
+export type User$attendanceSessionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AttendanceSession
+   */
+  select?: Prisma.AttendanceSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AttendanceSession
+   */
+  omit?: Prisma.AttendanceSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AttendanceSessionInclude<ExtArgs> | null
+  where?: Prisma.AttendanceSessionWhereInput
+  orderBy?: Prisma.AttendanceSessionOrderByWithRelationInput | Prisma.AttendanceSessionOrderByWithRelationInput[]
+  cursor?: Prisma.AttendanceSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AttendanceSessionScalarFieldEnum | Prisma.AttendanceSessionScalarFieldEnum[]
 }
 
 /**

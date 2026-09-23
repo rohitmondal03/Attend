@@ -13,18 +13,20 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean   @default(false)
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
-
+  id              String   @id
+  name            String
+  email           String
+  emailVerified   Boolean  @default(false)
+  image           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
   username        String?
   displayUsername String?
+
+  sessions          Session[]
+  accounts          Account[]
+  course            Course[]
+  attendanceSession AttendanceSession[]
 
   @@unique([email])
   @@unique([username])
@@ -77,4 +79,55 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model AttendanceSession {
+  id             String                    @id
+  teacherId      String
+  teacher        User                      @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  classLocation  String
+  courseId       String
+  course         Course                    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  classStartTime DateTime
+  classEndTime   DateTime
+  status         ATTENDANCE_SESSION_STATUS @default(ACTIVE)
+  qrSecret       String
+  createdAt      DateTime                  @default(now())
+
+  attendanceRecord AttendanceRecord[]
+
+  @@unique([qrSecret])
+  @@index([teacherId])
+  @@index([courseId])
+  @@map("attendance_session")
+}
+
+model Course {
+  id        String @id
+  teacherId String
+  teacher   User   @relation(fields: [teacherId], references: [id])
+  program   String
+  semester  String
+
+  attendanceSessions AttendanceSession[]
+
+  @@index([teacherId])
+  @@map("course")
+}
+
+model AttendanceRecord {
+  id                  String            @id
+  studentName         String
+  rollNumber          String
+  markedAt            DateTime          @default(now())
+  attendanceSessionId String
+  attendanceSession   AttendanceSession @relation(fields: [attendanceSessionId], references: [id], onDelete: Cascade)
+
+  @@index([rollNumber])
+  @@map("attendance_record")
+}
+
+enum ATTENDANCE_SESSION_STATUS {
+  ACTIVE
+  UNACTIVE
 }

@@ -54,7 +54,10 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  AttendanceSession: 'AttendanceSession',
+  Course: 'Course',
+  AttendanceRecord: 'AttendanceRecord'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -131,6 +134,42 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const AttendanceSessionScalarFieldEnum = {
+  id: 'id',
+  teacherId: 'teacherId',
+  classLocation: 'classLocation',
+  courseId: 'courseId',
+  classStartTime: 'classStartTime',
+  classEndTime: 'classEndTime',
+  status: 'status',
+  qrSecret: 'qrSecret',
+  createdAt: 'createdAt'
+} as const
+
+export type AttendanceSessionScalarFieldEnum = (typeof AttendanceSessionScalarFieldEnum)[keyof typeof AttendanceSessionScalarFieldEnum]
+
+
+export const CourseScalarFieldEnum = {
+  id: 'id',
+  teacherId: 'teacherId',
+  program: 'program',
+  semester: 'semester'
+} as const
+
+export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
+
+
+export const AttendanceRecordScalarFieldEnum = {
+  id: 'id',
+  studentName: 'studentName',
+  rollNumber: 'rollNumber',
+  markedAt: 'markedAt',
+  attendanceSessionId: 'attendanceSessionId'
+} as const
+
+export type AttendanceRecordScalarFieldEnum = (typeof AttendanceRecordScalarFieldEnum)[keyof typeof AttendanceRecordScalarFieldEnum]
 
 
 export const SortOrder = {

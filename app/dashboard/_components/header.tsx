@@ -137,7 +137,7 @@ export function DashboardHeader({
           {/* Avatar Dropdown with User Info, Profile, Logout */}
           <Dropdown>
             <DropdownTrigger>
-              <Avatar>
+              <Avatar className="rounded-full">
                 <Avatar.Image alt="user-avatar" src={"/self-photo.jpeg"} />
                 <Avatar.Fallback>R</Avatar.Fallback>
               </Avatar>

@@ -35,16 +35,14 @@ export function SessionsTableModal({
                   <Table.Content aria-label="Team members" className="">
                     <Table.Header>
                       <Table.Column isRowHeader>Subject</Table.Column>
-                      <Table.Column isRowHeader>Date</Table.Column>
-                      <Table.Column isRowHeader>Time</Table.Column>
+                      <Table.Column isRowHeader>Date & Time</Table.Column>
                       <Table.Column isRowHeader>Status</Table.Column>
                     </Table.Header>
                     <Table.Body>
                       {DEMO_SESSIONS_TABLE.map((data, idx) => (
                         <Table.Row key={idx}>
                           <Table.Cell>{data.subject}</Table.Cell>
-                          <Table.Cell>{data.date}</Table.Cell>
-                          <Table.Cell>{data.time}</Table.Cell>
+                          <Table.Cell>{data.date}, {data.time}</Table.Cell>
                           <Table.Cell>
                             <Chip color="accent">{data.status}</Chip>
                           </Table.Cell>

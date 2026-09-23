@@ -37,3 +37,18 @@ export type Account = Prisma.AccountModel
  * 
  */
 export type Verification = Prisma.VerificationModel
+/**
+ * Model AttendanceSession
+ * 
+ */
+export type AttendanceSession = Prisma.AttendanceSessionModel
+/**
+ * Model Course
+ * 
+ */
+export type Course = Prisma.CourseModel
+/**
+ * Model AttendanceRecord
+ * 
+ */
+export type AttendanceRecord = Prisma.AttendanceRecordModel
