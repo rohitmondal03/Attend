@@ -1,3 +1,4 @@
+import { type FormEvent, useState } from "react";
 import {
   Form,
   Label,
@@ -9,6 +10,7 @@ import {
   Button,
 } from "@heroui/react";
 import { PlusIcon } from "lucide-react";
+import { addNewCourseAction } from "@/actions/course";
 
 interface AddCourseModalProps {
   isOpen: boolean;
@@ -16,6 +18,23 @@ interface AddCourseModalProps {
 }
 
 export function AddCourseModal({ isOpen, onClose }: AddCourseModalProps) {
+  const [formValue, setFormValue] = useState<{
+    courseName: string;
+    program: string;
+    semester: number;
+  }>({
+    courseName: "",
+    program: "",
+    semester: 1,
+  });
+
+  // To add a new Course
+  const addNewCourse = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    await addNewCourseAction({ ...formValue });
+  };
+
   return (
     <Modal isOpen={isOpen} onOpenChange={onClose}>
       <Modal.Backdrop
@@ -31,7 +50,7 @@ export function AddCourseModal({ isOpen, onClose }: AddCourseModalProps) {
             </Modal.Header>
             <Modal.Body>
               <Form
-                onSubmit={() => {}}
+                onSubmit={addNewCourse}
                 className="grid grid-cols-2 gap-x-4 gap-y-6"
               >
                 <TextField
@@ -44,6 +63,13 @@ export function AddCourseModal({ isOpen, onClose }: AddCourseModalProps) {
                   <Input
                     placeholder="Enter Course/Subject Name"
                     autoComplete="off"
+                    value={formValue.courseName}
+                    onChange={(e) =>
+                      setFormValue((prev) => ({
+                        ...prev,
+                        courseName: e.target.value,
+                      }))
+                    }
                   />
                   <Description>
                     e.g, Research Methodology, Software Engineering
@@ -52,13 +78,33 @@ export function AddCourseModal({ isOpen, onClose }: AddCourseModalProps) {
                 </TextField>
                 <TextField isRequired name="program" type="text">
                   <Label className="font-semibold">Program</Label>
-                  <Input placeholder="Enter Program Name" autoComplete="off" />
+                  <Input
+                    placeholder="Enter Program Name"
+                    autoComplete="off"
+                    value={formValue.program}
+                    onChange={(e) =>
+                      setFormValue((prev) => ({
+                        ...prev,
+                        program: e.target.value,
+                      }))
+                    }
+                  />
                   <Description>e.g, M.Tech, MBA, Ph.D</Description>
                   <FieldError>Please select a valid program</FieldError>
                 </TextField>
                 <TextField isRequired name="semester" type="number">
                   <Label className="font-semibold">Semester</Label>
-                  <Input placeholder="Enter Semester" type="number" />
+                  <Input
+                    placeholder="Enter Semester"
+                    type="number"
+                    value={formValue.semester}
+                    onChange={(e) =>
+                      setFormValue((prev) => ({
+                        ...prev,
+                        semester: Number(e.target.value),
+                      }))
+                    }
+                  />
                   <Description>e.g, 1st, 2nd, 3rd, 4th</Description>
                   <FieldError>Please select a valid semester</FieldError>
                 </TextField>
