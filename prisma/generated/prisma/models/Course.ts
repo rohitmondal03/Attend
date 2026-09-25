@@ -220,7 +220,7 @@ export type CourseScalarWhereWithAggregatesInput = {
 }
 
 export type CourseCreateInput = {
-  id: string
+  id?: string
   program: string
   semester: string
   teacher: Prisma.UserCreateNestedOneWithoutCourseInput
@@ -228,7 +228,7 @@ export type CourseCreateInput = {
 }
 
 export type CourseUncheckedCreateInput = {
-  id: string
+  id?: string
   teacherId: string
   program: string
   semester: string
@@ -252,7 +252,7 @@ export type CourseUncheckedUpdateInput = {
 }
 
 export type CourseCreateManyInput = {
-  id: string
+  id?: string
   teacherId: string
   program: string
   semester: string
@@ -364,14 +364,14 @@ export type CourseUpdateOneRequiredWithoutAttendanceSessionsNestedInput = {
 }
 
 export type CourseCreateWithoutTeacherInput = {
-  id: string
+  id?: string
   program: string
   semester: string
   attendanceSessions?: Prisma.AttendanceSessionCreateNestedManyWithoutCourseInput
 }
 
 export type CourseUncheckedCreateWithoutTeacherInput = {
-  id: string
+  id?: string
   program: string
   semester: string
   attendanceSessions?: Prisma.AttendanceSessionUncheckedCreateNestedManyWithoutCourseInput
@@ -414,14 +414,14 @@ export type CourseScalarWhereInput = {
 }
 
 export type CourseCreateWithoutAttendanceSessionsInput = {
-  id: string
+  id?: string
   program: string
   semester: string
   teacher: Prisma.UserCreateNestedOneWithoutCourseInput
 }
 
 export type CourseUncheckedCreateWithoutAttendanceSessionsInput = {
-  id: string
+  id?: string
   teacherId: string
   program: string
   semester: string
@@ -458,7 +458,7 @@ export type CourseUncheckedUpdateWithoutAttendanceSessionsInput = {
 }
 
 export type CourseCreateManyTeacherInput = {
-  id: string
+  id?: string
   program: string
   semester: string
 }

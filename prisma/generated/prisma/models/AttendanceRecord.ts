@@ -196,6 +196,7 @@ export type AttendanceRecordOrderByWithRelationInput = {
 
 export type AttendanceRecordWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  attendanceSessionId_rollNumber?: Prisma.AttendanceRecordAttendanceSessionIdRollNumberCompoundUniqueInput
   AND?: Prisma.AttendanceRecordWhereInput | Prisma.AttendanceRecordWhereInput[]
   OR?: Prisma.AttendanceRecordWhereInput[]
   NOT?: Prisma.AttendanceRecordWhereInput | Prisma.AttendanceRecordWhereInput[]
@@ -204,7 +205,7 @@ export type AttendanceRecordWhereUniqueInput = Prisma.AtLeast<{
   markedAt?: Prisma.DateTimeFilter<"AttendanceRecord"> | Date | string
   attendanceSessionId?: Prisma.StringFilter<"AttendanceRecord"> | string
   attendanceSession?: Prisma.XOR<Prisma.AttendanceSessionScalarRelationFilter, Prisma.AttendanceSessionWhereInput>
-}, "id">
+}, "id" | "attendanceSessionId_rollNumber">
 
 export type AttendanceRecordOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -229,7 +230,7 @@ export type AttendanceRecordScalarWhereWithAggregatesInput = {
 }
 
 export type AttendanceRecordCreateInput = {
-  id: string
+  id?: string
   studentName: string
   rollNumber: string
   markedAt?: Date | string
@@ -237,7 +238,7 @@ export type AttendanceRecordCreateInput = {
 }
 
 export type AttendanceRecordUncheckedCreateInput = {
-  id: string
+  id?: string
   studentName: string
   rollNumber: string
   markedAt?: Date | string
@@ -261,7 +262,7 @@ export type AttendanceRecordUncheckedUpdateInput = {
 }
 
 export type AttendanceRecordCreateManyInput = {
-  id: string
+  id?: string
   studentName: string
   rollNumber: string
   markedAt?: Date | string
@@ -291,6 +292,11 @@ export type AttendanceRecordListRelationFilter = {
 
 export type AttendanceRecordOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type AttendanceRecordAttendanceSessionIdRollNumberCompoundUniqueInput = {
+  attendanceSessionId: string
+  rollNumber: string
 }
 
 export type AttendanceRecordCountOrderByAggregateInput = {
@@ -360,14 +366,14 @@ export type AttendanceRecordUncheckedUpdateManyWithoutAttendanceSessionNestedInp
 }
 
 export type AttendanceRecordCreateWithoutAttendanceSessionInput = {
-  id: string
+  id?: string
   studentName: string
   rollNumber: string
   markedAt?: Date | string
 }
 
 export type AttendanceRecordUncheckedCreateWithoutAttendanceSessionInput = {
-  id: string
+  id?: string
   studentName: string
   rollNumber: string
   markedAt?: Date | string
@@ -411,7 +417,7 @@ export type AttendanceRecordScalarWhereInput = {
 }
 
 export type AttendanceRecordCreateManyAttendanceSessionInput = {
-  id: string
+  id?: string
   studentName: string
   rollNumber: string
   markedAt?: Date | string

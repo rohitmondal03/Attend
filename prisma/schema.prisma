@@ -82,7 +82,7 @@ model Verification {
 }
 
 model AttendanceSession {
-  id             String                    @id
+  id             String                    @id @default(dbgenerated("gen_random_uuid()"))
   teacherId      String
   teacher        User                      @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   classLocation  String
@@ -103,7 +103,7 @@ model AttendanceSession {
 }
 
 model Course {
-  id        String @id
+  id        String @id @default(dbgenerated("gen_random_uuid()"))
   teacherId String
   teacher   User   @relation(fields: [teacherId], references: [id])
   program   String
@@ -116,13 +116,14 @@ model Course {
 }
 
 model AttendanceRecord {
-  id                  String            @id
+  id                  String            @id @default(dbgenerated("gen_random_uuid()"))
   studentName         String
   rollNumber          String
   markedAt            DateTime          @default(now())
   attendanceSessionId String
   attendanceSession   AttendanceSession @relation(fields: [attendanceSessionId], references: [id], onDelete: Cascade)
 
+  @@unique([attendanceSessionId, rollNumber])
   @@index([rollNumber])
   @@map("attendance_record")
 }

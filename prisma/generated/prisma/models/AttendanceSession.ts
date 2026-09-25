@@ -283,7 +283,7 @@ export type AttendanceSessionScalarWhereWithAggregatesInput = {
 }
 
 export type AttendanceSessionCreateInput = {
-  id: string
+  id?: string
   classLocation: string
   classStartTime: Date | string
   classEndTime: Date | string
@@ -296,7 +296,7 @@ export type AttendanceSessionCreateInput = {
 }
 
 export type AttendanceSessionUncheckedCreateInput = {
-  id: string
+  id?: string
   teacherId: string
   classLocation: string
   courseId: string
@@ -335,7 +335,7 @@ export type AttendanceSessionUncheckedUpdateInput = {
 }
 
 export type AttendanceSessionCreateManyInput = {
-  id: string
+  id?: string
   teacherId: string
   classLocation: string
   courseId: string
@@ -522,7 +522,7 @@ export type AttendanceSessionUpdateOneRequiredWithoutAttendanceRecordNestedInput
 }
 
 export type AttendanceSessionCreateWithoutTeacherInput = {
-  id: string
+  id?: string
   classLocation: string
   classStartTime: Date | string
   classEndTime: Date | string
@@ -534,7 +534,7 @@ export type AttendanceSessionCreateWithoutTeacherInput = {
 }
 
 export type AttendanceSessionUncheckedCreateWithoutTeacherInput = {
-  id: string
+  id?: string
   classLocation: string
   courseId: string
   classStartTime: Date | string
@@ -587,7 +587,7 @@ export type AttendanceSessionScalarWhereInput = {
 }
 
 export type AttendanceSessionCreateWithoutCourseInput = {
-  id: string
+  id?: string
   classLocation: string
   classStartTime: Date | string
   classEndTime: Date | string
@@ -599,7 +599,7 @@ export type AttendanceSessionCreateWithoutCourseInput = {
 }
 
 export type AttendanceSessionUncheckedCreateWithoutCourseInput = {
-  id: string
+  id?: string
   teacherId: string
   classLocation: string
   classStartTime: Date | string
@@ -637,7 +637,7 @@ export type AttendanceSessionUpdateManyWithWhereWithoutCourseInput = {
 }
 
 export type AttendanceSessionCreateWithoutAttendanceRecordInput = {
-  id: string
+  id?: string
   classLocation: string
   classStartTime: Date | string
   classEndTime: Date | string
@@ -649,7 +649,7 @@ export type AttendanceSessionCreateWithoutAttendanceRecordInput = {
 }
 
 export type AttendanceSessionUncheckedCreateWithoutAttendanceRecordInput = {
-  id: string
+  id?: string
   teacherId: string
   classLocation: string
   courseId: string
@@ -701,7 +701,7 @@ export type AttendanceSessionUncheckedUpdateWithoutAttendanceRecordInput = {
 }
 
 export type AttendanceSessionCreateManyTeacherInput = {
-  id: string
+  id?: string
   classLocation: string
   courseId: string
   classStartTime: Date | string
@@ -747,7 +747,7 @@ export type AttendanceSessionUncheckedUpdateManyWithoutTeacherInput = {
 }
 
 export type AttendanceSessionCreateManyCourseInput = {
-  id: string
+  id?: string
   teacherId: string
   classLocation: string
   classStartTime: Date | string
