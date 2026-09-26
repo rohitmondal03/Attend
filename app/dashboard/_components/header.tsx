@@ -193,6 +193,7 @@ export function DashboardHeader({
       <CreateAttendanceSessionModal
         isOpen={isNewSessionModalOpen}
         onClose={() => setIsNewSessionModalOpen(false)}
+        setIsNewCourseModalOpen={setIsNewCourseModalOpen}
       />
       {/* Course addition Modal */}
       <AddCourseModal
