@@ -1,8 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
-import { ROUTES } from "@/lib/routes";
 import { getCurrentUser } from "./user";
 
 export const addNewCourseAction = async ({
@@ -14,13 +12,20 @@ export const addNewCourseAction = async ({
   program: string;
   semester: number;
 }) => {
-  // await prisma.course.create({
-  //   data: {
-      
-  //   }
-  // })
+  const currentUser = await getCurrentUser();
 
-  revalidatePath(ROUTES.dashboard)
+  if (!currentUser) {
+    throw new Error("User not found !!");
+  }
+
+  await prisma.course.create({
+    data: {
+      courseName,
+      program,
+      semester,
+      teacherId: currentUser.id,
+    },
+  });
 };
 
 export const getUsersCoursesAction = async () => {
@@ -36,5 +41,5 @@ export const getUsersCoursesAction = async () => {
     },
   });
 
-  return courses
+  return courses;
 };

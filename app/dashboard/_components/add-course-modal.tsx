@@ -1,5 +1,5 @@
 import { type FormEvent, useState } from "react";
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, ClockIcon } from "lucide-react";
 import {
   Form,
   Label,
@@ -9,6 +9,7 @@ import {
   Description,
   FieldError,
   Button,
+  toast,
 } from "@heroui/react";
 import { addNewCourseAction } from "@/actions/course";
 
@@ -27,12 +28,27 @@ export function AddCourseModal({ isOpen, onClose }: AddCourseModalProps) {
     program: "",
     semester: 1,
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   // To add a new Course
   const addNewCourse = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
 
-    await addNewCourseAction({ ...formValue });
+    await addNewCourseAction({ ...formValue })
+      .then(() => {
+        toast.success("New course added successfully !!");
+
+        setFormValue({
+          courseName: "",
+          program: "",
+          semester: 1,
+        });
+
+        onClose();
+      })
+      .catch(() => toast.danger("Failed to add new course !!"))
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -111,9 +127,19 @@ export function AddCourseModal({ isOpen, onClose }: AddCourseModalProps) {
                 <Button
                   type="submit"
                   className={"font-semibold w-full col-span-2"}
+                  isDisabled={isLoading}
                 >
-                  <PlusIcon />
-                  Add Course
+                  {isLoading ? (
+                    <>
+                      <ClockIcon />
+                      Adding Course...
+                    </>
+                  ) : (
+                    <>
+                      <PlusIcon />
+                      Add Course
+                    </>
+                  )}
                 </Button>
               </Form>
             </Modal.Body>

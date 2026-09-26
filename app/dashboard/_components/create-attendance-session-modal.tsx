@@ -1,5 +1,5 @@
 import { type FormEvent, useEffect, useState } from "react";
-import { PlusIcon } from "lucide-react";
+import { ClockIcon, PlusIcon } from "lucide-react";
 import { parseTime } from "@internationalized/date";
 import {
   Button,
@@ -13,6 +13,7 @@ import {
   Select,
   TextField,
   TimeField,
+  toast,
   type TimeValue,
 } from "@heroui/react";
 import { createNewAttendanceSessionAction } from "@/actions/attendance";
@@ -24,21 +25,6 @@ interface CreateAttendanceSessionModalProps {
   onClose: () => void;
   setIsNewCourseModalOpen: (value: boolean) => void;
 }
-
-const DEMO_COURSES = [
-  {
-    id: "1",
-    title: "Maths",
-  },
-  {
-    id: "2",
-    title: "Programing",
-  },
-  {
-    id: "3",
-    title: "ML",
-  },
-];
 
 export function CreateAttendanceSessionModal({
   isOpen,
@@ -57,8 +43,10 @@ export function CreateAttendanceSessionModal({
     courseId: "",
   });
   const [isFetching, setIsFetching] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [courseList, setCourseList] = useState<Course[]>([]);
 
+  // To fetch user's courses
   useEffect(() => {
     (async () => {
       setIsFetching(true);
@@ -70,6 +58,7 @@ export function CreateAttendanceSessionModal({
   // To create a new Attendance session
   const createNewAttendanceSession = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
 
     await createNewAttendanceSessionAction({
       courseId: formValue.courseId,
@@ -88,7 +77,14 @@ export function CreateAttendanceSessionModal({
 
         return d;
       })(),
-    });
+    })
+      .then(() => {
+        toast.success("Attendance session created successfully");
+      })
+      .catch(() => toast.danger("Failed to create new attendance session"))
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -133,13 +129,13 @@ export function CreateAttendanceSessionModal({
                       </Select.Trigger>
                       <Select.Popover>
                         <ListBox>
-                          {DEMO_COURSES.map((course) => (
+                          {courseList.map((course) => (
                             <ListBox.Item
                               key={course.id}
                               id={course.id}
-                              textValue={course.title}
+                              textValue={course.courseName}
                             >
-                              {course.title}
+                              {course.courseName}
                               <ListBox.ItemIndicator />
                             </ListBox.Item>
                           ))}
@@ -157,6 +153,7 @@ export function CreateAttendanceSessionModal({
                   >
                     <Label className="font-semibold">Class Name</Label>
                     <Input
+                      autoComplete="off"
                       placeholder="Center 3, Room 5241"
                       value={formValue.classLocation}
                       onChange={(e) =>
@@ -214,9 +211,19 @@ export function CreateAttendanceSessionModal({
                   <Button
                     type="submit"
                     className={"font-semibold w-full col-span-2"}
+                    isDisabled={isLoading}
                   >
-                    <PlusIcon />
-                    Create Attendance Session
+                    {isLoading ? (
+                      <>
+                        <ClockIcon />
+                        Creating Attendance Session...
+                      </>
+                    ) : (
+                      <>
+                        <PlusIcon />
+                        Create Attendance Session
+                      </>
+                    )}
                   </Button>
                 </Form>
               ) : (
