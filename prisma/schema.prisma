@@ -103,11 +103,12 @@ model AttendanceSession {
 }
 
 model Course {
-  id        String @id @default(dbgenerated("gen_random_uuid()"))
-  teacherId String
-  teacher   User   @relation(fields: [teacherId], references: [id])
-  program   String
-  semester  String
+  id         String @id @default(dbgenerated("gen_random_uuid()"))
+  teacherId  String
+  teacher    User   @relation(fields: [teacherId], references: [id])
+  courseName String
+  program    String
+  semester   String
 
   attendanceSessions AttendanceSession[]
 

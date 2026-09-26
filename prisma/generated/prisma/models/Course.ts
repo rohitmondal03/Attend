@@ -27,6 +27,7 @@ export type AggregateCourse = {
 export type CourseMinAggregateOutputType = {
   id: string | null
   teacherId: string | null
+  courseName: string | null
   program: string | null
   semester: string | null
 }
@@ -34,6 +35,7 @@ export type CourseMinAggregateOutputType = {
 export type CourseMaxAggregateOutputType = {
   id: string | null
   teacherId: string | null
+  courseName: string | null
   program: string | null
   semester: string | null
 }
@@ -41,6 +43,7 @@ export type CourseMaxAggregateOutputType = {
 export type CourseCountAggregateOutputType = {
   id: number
   teacherId: number
+  courseName: number
   program: number
   semester: number
   _all: number
@@ -50,6 +53,7 @@ export type CourseCountAggregateOutputType = {
 export type CourseMinAggregateInputType = {
   id?: true
   teacherId?: true
+  courseName?: true
   program?: true
   semester?: true
 }
@@ -57,6 +61,7 @@ export type CourseMinAggregateInputType = {
 export type CourseMaxAggregateInputType = {
   id?: true
   teacherId?: true
+  courseName?: true
   program?: true
   semester?: true
 }
@@ -64,6 +69,7 @@ export type CourseMaxAggregateInputType = {
 export type CourseCountAggregateInputType = {
   id?: true
   teacherId?: true
+  courseName?: true
   program?: true
   semester?: true
   _all?: true
@@ -144,6 +150,7 @@ export type CourseGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type CourseGroupByOutputType = {
   id: string
   teacherId: string
+  courseName: string
   program: string
   semester: string
   _count: CourseCountAggregateOutputType | null
@@ -172,6 +179,7 @@ export type CourseWhereInput = {
   NOT?: Prisma.CourseWhereInput | Prisma.CourseWhereInput[]
   id?: Prisma.StringFilter<"Course"> | string
   teacherId?: Prisma.StringFilter<"Course"> | string
+  courseName?: Prisma.StringFilter<"Course"> | string
   program?: Prisma.StringFilter<"Course"> | string
   semester?: Prisma.StringFilter<"Course"> | string
   teacher?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -181,6 +189,7 @@ export type CourseWhereInput = {
 export type CourseOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   teacherId?: Prisma.SortOrder
+  courseName?: Prisma.SortOrder
   program?: Prisma.SortOrder
   semester?: Prisma.SortOrder
   teacher?: Prisma.UserOrderByWithRelationInput
@@ -193,6 +202,7 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CourseWhereInput[]
   NOT?: Prisma.CourseWhereInput | Prisma.CourseWhereInput[]
   teacherId?: Prisma.StringFilter<"Course"> | string
+  courseName?: Prisma.StringFilter<"Course"> | string
   program?: Prisma.StringFilter<"Course"> | string
   semester?: Prisma.StringFilter<"Course"> | string
   teacher?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -202,6 +212,7 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
 export type CourseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   teacherId?: Prisma.SortOrder
+  courseName?: Prisma.SortOrder
   program?: Prisma.SortOrder
   semester?: Prisma.SortOrder
   _count?: Prisma.CourseCountOrderByAggregateInput
@@ -215,12 +226,14 @@ export type CourseScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CourseScalarWhereWithAggregatesInput | Prisma.CourseScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Course"> | string
   teacherId?: Prisma.StringWithAggregatesFilter<"Course"> | string
+  courseName?: Prisma.StringWithAggregatesFilter<"Course"> | string
   program?: Prisma.StringWithAggregatesFilter<"Course"> | string
   semester?: Prisma.StringWithAggregatesFilter<"Course"> | string
 }
 
 export type CourseCreateInput = {
   id?: string
+  courseName: string
   program: string
   semester: string
   teacher: Prisma.UserCreateNestedOneWithoutCourseInput
@@ -230,6 +243,7 @@ export type CourseCreateInput = {
 export type CourseUncheckedCreateInput = {
   id?: string
   teacherId: string
+  courseName: string
   program: string
   semester: string
   attendanceSessions?: Prisma.AttendanceSessionUncheckedCreateNestedManyWithoutCourseInput
@@ -237,6 +251,7 @@ export type CourseUncheckedCreateInput = {
 
 export type CourseUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
   semester?: Prisma.StringFieldUpdateOperationsInput | string
   teacher?: Prisma.UserUpdateOneRequiredWithoutCourseNestedInput
@@ -246,6 +261,7 @@ export type CourseUpdateInput = {
 export type CourseUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   teacherId?: Prisma.StringFieldUpdateOperationsInput | string
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
   semester?: Prisma.StringFieldUpdateOperationsInput | string
   attendanceSessions?: Prisma.AttendanceSessionUncheckedUpdateManyWithoutCourseNestedInput
@@ -254,12 +270,14 @@ export type CourseUncheckedUpdateInput = {
 export type CourseCreateManyInput = {
   id?: string
   teacherId: string
+  courseName: string
   program: string
   semester: string
 }
 
 export type CourseUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
   semester?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -267,6 +285,7 @@ export type CourseUpdateManyMutationInput = {
 export type CourseUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   teacherId?: Prisma.StringFieldUpdateOperationsInput | string
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
   semester?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -289,6 +308,7 @@ export type CourseScalarRelationFilter = {
 export type CourseCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   teacherId?: Prisma.SortOrder
+  courseName?: Prisma.SortOrder
   program?: Prisma.SortOrder
   semester?: Prisma.SortOrder
 }
@@ -296,6 +316,7 @@ export type CourseCountOrderByAggregateInput = {
 export type CourseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   teacherId?: Prisma.SortOrder
+  courseName?: Prisma.SortOrder
   program?: Prisma.SortOrder
   semester?: Prisma.SortOrder
 }
@@ -303,6 +324,7 @@ export type CourseMaxOrderByAggregateInput = {
 export type CourseMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   teacherId?: Prisma.SortOrder
+  courseName?: Prisma.SortOrder
   program?: Prisma.SortOrder
   semester?: Prisma.SortOrder
 }
@@ -365,6 +387,7 @@ export type CourseUpdateOneRequiredWithoutAttendanceSessionsNestedInput = {
 
 export type CourseCreateWithoutTeacherInput = {
   id?: string
+  courseName: string
   program: string
   semester: string
   attendanceSessions?: Prisma.AttendanceSessionCreateNestedManyWithoutCourseInput
@@ -372,6 +395,7 @@ export type CourseCreateWithoutTeacherInput = {
 
 export type CourseUncheckedCreateWithoutTeacherInput = {
   id?: string
+  courseName: string
   program: string
   semester: string
   attendanceSessions?: Prisma.AttendanceSessionUncheckedCreateNestedManyWithoutCourseInput
@@ -409,12 +433,14 @@ export type CourseScalarWhereInput = {
   NOT?: Prisma.CourseScalarWhereInput | Prisma.CourseScalarWhereInput[]
   id?: Prisma.StringFilter<"Course"> | string
   teacherId?: Prisma.StringFilter<"Course"> | string
+  courseName?: Prisma.StringFilter<"Course"> | string
   program?: Prisma.StringFilter<"Course"> | string
   semester?: Prisma.StringFilter<"Course"> | string
 }
 
 export type CourseCreateWithoutAttendanceSessionsInput = {
   id?: string
+  courseName: string
   program: string
   semester: string
   teacher: Prisma.UserCreateNestedOneWithoutCourseInput
@@ -423,6 +449,7 @@ export type CourseCreateWithoutAttendanceSessionsInput = {
 export type CourseUncheckedCreateWithoutAttendanceSessionsInput = {
   id?: string
   teacherId: string
+  courseName: string
   program: string
   semester: string
 }
@@ -445,6 +472,7 @@ export type CourseUpdateToOneWithWhereWithoutAttendanceSessionsInput = {
 
 export type CourseUpdateWithoutAttendanceSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
   semester?: Prisma.StringFieldUpdateOperationsInput | string
   teacher?: Prisma.UserUpdateOneRequiredWithoutCourseNestedInput
@@ -453,18 +481,21 @@ export type CourseUpdateWithoutAttendanceSessionsInput = {
 export type CourseUncheckedUpdateWithoutAttendanceSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   teacherId?: Prisma.StringFieldUpdateOperationsInput | string
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
   semester?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CourseCreateManyTeacherInput = {
   id?: string
+  courseName: string
   program: string
   semester: string
 }
 
 export type CourseUpdateWithoutTeacherInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
   semester?: Prisma.StringFieldUpdateOperationsInput | string
   attendanceSessions?: Prisma.AttendanceSessionUpdateManyWithoutCourseNestedInput
@@ -472,6 +503,7 @@ export type CourseUpdateWithoutTeacherInput = {
 
 export type CourseUncheckedUpdateWithoutTeacherInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
   semester?: Prisma.StringFieldUpdateOperationsInput | string
   attendanceSessions?: Prisma.AttendanceSessionUncheckedUpdateManyWithoutCourseNestedInput
@@ -479,6 +511,7 @@ export type CourseUncheckedUpdateWithoutTeacherInput = {
 
 export type CourseUncheckedUpdateManyWithoutTeacherInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
   semester?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -517,6 +550,7 @@ export type CourseCountOutputTypeCountAttendanceSessionsArgs<ExtArgs extends run
 export type CourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   teacherId?: boolean
+  courseName?: boolean
   program?: boolean
   semester?: boolean
   teacher?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -527,6 +561,7 @@ export type CourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type CourseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   teacherId?: boolean
+  courseName?: boolean
   program?: boolean
   semester?: boolean
   teacher?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -535,6 +570,7 @@ export type CourseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type CourseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   teacherId?: boolean
+  courseName?: boolean
   program?: boolean
   semester?: boolean
   teacher?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -543,11 +579,12 @@ export type CourseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type CourseSelectScalar = {
   id?: boolean
   teacherId?: boolean
+  courseName?: boolean
   program?: boolean
   semester?: boolean
 }
 
-export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teacherId" | "program" | "semester", ExtArgs["result"]["course"]>
+export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "teacherId" | "courseName" | "program" | "semester", ExtArgs["result"]["course"]>
 export type CourseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   teacher?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   attendanceSessions?: boolean | Prisma.Course$attendanceSessionsArgs<ExtArgs>
@@ -569,6 +606,7 @@ export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     teacherId: string
+    courseName: string
     program: string
     semester: string
   }, ExtArgs["result"]["course"]>
@@ -998,6 +1036,7 @@ export interface Prisma__CourseClient<T, Null = never, ExtArgs extends runtime.T
 export interface CourseFieldRefs {
   readonly id: Prisma.FieldRef<"Course", 'String'>
   readonly teacherId: Prisma.FieldRef<"Course", 'String'>
+  readonly courseName: Prisma.FieldRef<"Course", 'String'>
   readonly program: Prisma.FieldRef<"Course", 'String'>
   readonly semester: Prisma.FieldRef<"Course", 'String'>
 }

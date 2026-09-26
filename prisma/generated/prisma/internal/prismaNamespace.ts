@@ -1058,6 +1058,7 @@ export type AttendanceSessionScalarFieldEnum = (typeof AttendanceSessionScalarFi
 export const CourseScalarFieldEnum = {
   id: 'id',
   teacherId: 'teacherId',
+  courseName: 'courseName',
   program: 'program',
   semester: 'semester'
 } as const
