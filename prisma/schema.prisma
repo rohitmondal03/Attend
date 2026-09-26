@@ -108,7 +108,7 @@ model Course {
   teacher    User   @relation(fields: [teacherId], references: [id])
   courseName String
   program    String
-  semester   String
+  semester   Int
 
   attendanceSessions AttendanceSession[]
 
