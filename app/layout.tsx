@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Figtree, Changa_One, Instrument_Serif } from "next/font/google";
 import { ReactLenis } from "lenis/react";
-import "./globals.css";
 import { ToastProvider } from "@heroui/react";
+import "./globals.css";
 
 const figtree = Figtree({
   variable: "--font-figtree",

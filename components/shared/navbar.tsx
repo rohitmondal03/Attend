@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import { buttonVariants } from "@heroui/styles";
+import { ArrowUpRightIcon } from "lucide-react";
 import { ROUTES } from "@/lib/routes";
 import { Logo } from "./logo";
-import { ArrowUpRightIcon } from "lucide-react";
 
 const NAV_LINKS = [
   {

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useState } from "react";
@@ -15,7 +16,6 @@ import {
 import {
   SettingsIcon,
   LogOutIcon,
-  NotebookIcon,
   PlusIcon,
   DotIcon,
   DiamondPlusIcon,
@@ -24,7 +24,6 @@ import {
 import { signoutAction } from "@/actions/auth";
 import { ROUTES } from "@/lib/routes";
 import { Logo } from "@/components/shared/logo";
-import Link from "next/link";
 
 const Dropdown = dynamic(() =>
   import("@heroui/react").then((mod) => mod.Dropdown),
@@ -97,7 +96,7 @@ export function DashboardHeader({
       <header className="py-4 px-6 border-b border-border-tertiary flex items-center justify-between">
         <Logo />
 
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center justify-center gap-6">
           {/* Create Button for NEW Session & Course addition */}
           <Dropdown>
             <Button className={"font-semibold"}>
@@ -162,7 +161,7 @@ export function DashboardHeader({
                     <SettingsIcon className="size-4" />
                     <Label className="font-semibold">Profile Settings</Label>
                   </DropdownItem>
-                  <DropdownItem
+                  {/* <DropdownItem
                     id="my-sessions"
                     textValue="My Sessions"
                     className="font-bold"
@@ -170,7 +169,7 @@ export function DashboardHeader({
                   >
                     <NotebookIcon className="size-4" />
                     <Label className="font-semibold">My Sessions</Label>
-                  </DropdownItem>
+                  </DropdownItem> */}
                 </DropdownSection>
                 <Separator orientation="horizontal" />
                 <DropdownSection>

@@ -1,4 +1,6 @@
-import { createNewAttendanceSessionAction } from "@/actions/attendance";
+import { type FormEvent, useState } from "react";
+import { PlusIcon } from "lucide-react";
+import { parseTime } from "@internationalized/date";
 import {
   Button,
   Description,
@@ -13,9 +15,7 @@ import {
   TimeField,
   type TimeValue,
 } from "@heroui/react";
-import { PlusIcon } from "lucide-react";
-import { FormEvent, useState } from "react";
-import { parseTime } from "@internationalized/date";
+import { createNewAttendanceSessionAction } from "@/actions/attendance";
 
 interface CreateAttendanceSessionModalProps {
   isOpen: boolean;

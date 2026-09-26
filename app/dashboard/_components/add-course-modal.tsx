@@ -1,4 +1,5 @@
 import { type FormEvent, useState } from "react";
+import { PlusIcon } from "lucide-react";
 import {
   Form,
   Label,
@@ -9,7 +10,6 @@ import {
   FieldError,
   Button,
 } from "@heroui/react";
-import { PlusIcon } from "lucide-react";
 import { addNewCourseAction } from "@/actions/course";
 
 interface AddCourseModalProps {
