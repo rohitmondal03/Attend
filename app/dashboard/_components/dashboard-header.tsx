@@ -1,25 +1,18 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import {
-  Avatar,
-  Button,
-  buttonVariants,
-  Header,
-  Label,
-  Separator,
-  toast,
-} from "@heroui/react";
+import { Avatar, Button, Header, Label, Separator, toast } from "@heroui/react";
 import {
   SettingsIcon,
   LogOutIcon,
   PlusIcon,
-  DotIcon,
   DiamondPlusIcon,
   LayersPlusIcon,
+  ChevronsUpDownIcon,
+  NotebookIcon,
+  BookmarkIcon,
 } from "lucide-react";
 import { signoutAction } from "@/actions/auth";
 import { ROUTES } from "@/lib/routes";
@@ -54,8 +47,8 @@ const AddCourseModal = dynamic(() =>
 const ProfileSettingsModal = dynamic(() =>
   import("./profile-settings-modal").then((mod) => mod.ProfileSettingsModal),
 );
-const SessionsTableModal = dynamic(() =>
-  import("./sessions-table-modal").then((mod) => mod.SessionsTableModal),
+const CoursesTableModal = dynamic(() =>
+  import("./courses-table-modal").then((mod) => mod.CoursesTableModal),
 );
 
 interface DasshboardHeaderProps {
@@ -72,8 +65,7 @@ export function DashboardHeader({
   const [isNewCourseModalOpen, setIsNewCourseModalOpen] = useState(false);
   const [isProfileSettingsModalOpen, setIsProfileSettingsModalOpen] =
     useState(false);
-  const [isSessionsTableModalOpen, setIsSessionsTableModalOpen] =
-    useState(false);
+  const [isCoursesTableModalOpen, setIsCoursesTableModalOpen] = useState(false);
 
   // Sign out user
   const signout = async () => {
@@ -93,7 +85,7 @@ export function DashboardHeader({
 
   return (
     <>
-      <header className="py-4 px-6 border-b border-border-tertiary flex items-center justify-between">
+      <header className="fixed w-full top-0 left-0 py-4 px-10 border-b-2 border-default-foreground flex items-center justify-between bg-zinc-200 z-10">
         <Logo />
 
         <div className="flex items-center justify-center gap-6">
@@ -121,8 +113,8 @@ export function DashboardHeader({
             </DropdownPopover>
           </Dropdown>
 
-          {/* Ongioing session Link */}
-          <Link
+          {/* Ongoing session Link */}
+          {/* <Link
             href={ROUTES.dashboard}
             className={buttonVariants({
               variant: "danger-soft",
@@ -131,24 +123,27 @@ export function DashboardHeader({
           >
             <DotIcon className="animate-pulse size-8" />
             Ongoing Session
-          </Link>
+          </Link> */}
 
           {/* Avatar Dropdown with User Info, Profile, Logout */}
           <Dropdown>
-            <DropdownTrigger>
-              <Avatar className="rounded-full">
-                <Avatar.Image alt="user-avatar" src={"/self-photo.jpeg"} />
-                <Avatar.Fallback>R</Avatar.Fallback>
-              </Avatar>
+            <DropdownTrigger className="flex items-center justify-center gap-4 py-1 px-4 rounded-3xl bg-background">
+              <div className="text-left">
+                <p className="text-xs">{userName}</p>
+                <p className="text-xs text-muted">{userEmail}</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <Avatar className="rounded-full size-10">
+                  <Avatar.Image alt="user-avatar" src={"/self-photo.jpeg"} />
+                  <Avatar.Fallback>R</Avatar.Fallback>
+                </Avatar>
+                <ChevronsUpDownIcon className="size-4 text-muted" />
+              </div>
             </DropdownTrigger>
             <DropdownPopover>
               <DropdownMenu className="font-bold py-4 space-y-2">
                 <DropdownSection className="space-y-1">
-                  <Header className="py-0 text-sm text-black">
-                    {userName}
-                  </Header>
-                  <Header className="py-0">IIIT Allahabad</Header>
-                  <Header className="py-0">{userEmail}</Header>
+                  <Header className="py-0">Institution - IIIT Allahabad</Header>
                 </DropdownSection>
                 <Separator orientation="horizontal" />
                 <DropdownSection className="font-bold">
@@ -161,15 +156,26 @@ export function DashboardHeader({
                     <SettingsIcon className="size-4" />
                     <Label className="font-semibold">Profile Settings</Label>
                   </DropdownItem>
-                  {/* <DropdownItem
-                    id="my-sessions"
-                    textValue="My Sessions"
+                </DropdownSection>
+                <Separator orientation="horizontal" />
+                <DropdownSection className="font-bold">
+                  <DropdownItem
+                    id="courses"
+                    textValue="Your Courses"
                     className="font-bold"
-                    onPress={() => setIsSessionsTableModalOpen(true)}
+                    onPress={() => setIsCoursesTableModalOpen(true)}
                   >
                     <NotebookIcon className="size-4" />
-                    <Label className="font-semibold">My Sessions</Label>
-                  </DropdownItem> */}
+                    <Label className="font-semibold">Your Courses</Label>
+                  </DropdownItem>
+                  <DropdownItem
+                    id="attendance-sessions"
+                    textValue="Attendance Sessions"
+                    className="font-bold"
+                  >
+                    <BookmarkIcon className="size-4" />
+                    <Label className="font-semibold">Attendance Sessions</Label>
+                  </DropdownItem>
                 </DropdownSection>
                 <Separator orientation="horizontal" />
                 <DropdownSection>
@@ -208,9 +214,9 @@ export function DashboardHeader({
         userEmail={userEmail}
       />
       {/* Users created Sessions */}
-      <SessionsTableModal
-        isOpen={isSessionsTableModalOpen}
-        onClose={() => setIsSessionsTableModalOpen(false)}
+      <CoursesTableModal
+        isOpen={isCoursesTableModalOpen}
+        onClose={() => setIsCoursesTableModalOpen(false)}
       />
     </>
   );
