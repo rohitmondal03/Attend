@@ -19,7 +19,7 @@ export const createNewAttendanceSessionAction = async ({
 
   const qrSecret = crypto.randomBytes(32).toString("hex");
 
-  await prisma.attendanceSession.create({
+  const { id: attendanceSessionId } = await prisma.attendanceSession.create({
     data: {
       courseId,
       classLocation,
@@ -29,4 +29,6 @@ export const createNewAttendanceSessionAction = async ({
       qrSecret,
     },
   });
+
+  return attendanceSessionId;
 };

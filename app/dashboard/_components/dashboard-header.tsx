@@ -172,9 +172,19 @@ export function DashboardHeader({
                     id="attendance-sessions"
                     textValue="Attendance Sessions"
                     className="font-bold"
+                    onPress={() => redirect(ROUTES.dashboard + "#sessions")}
                   >
                     <BookmarkIcon className="size-4" />
                     <Label className="font-semibold">Attendance Sessions</Label>
+                  </DropdownItem>
+                  <DropdownItem
+                    id="add-new-course"
+                    textValue="Add New Course"
+                    className="font-bold"
+                    onPress={() => setIsNewCourseModalOpen(true)}
+                  >
+                    <LayersPlusIcon className="size-4" />
+                    <Label className="font-semibold">Add New Course</Label>
                   </DropdownItem>
                 </DropdownSection>
                 <Separator orientation="horizontal" />
@@ -183,7 +193,7 @@ export function DashboardHeader({
                     id="copy-link"
                     textValue="Copy link"
                     variant="danger"
-                    onClick={signout}
+                    onPress={signout}
                   >
                     <LogOutIcon className="size-4 text-danger" />
                     <Label className="font-semibold">Sign Out</Label>
