@@ -25,7 +25,7 @@ export default async function DashboardLayout({
         userName={sessionData.user.name}
       />
 
-      <div className="px-8 py-8 rounded-3xl mt-28">{children}</div>
+      <div className="px-8 py-8 mt-28">{children}</div>
     </main>
   );
 }

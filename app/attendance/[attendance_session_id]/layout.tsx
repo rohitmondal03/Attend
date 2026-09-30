@@ -3,6 +3,7 @@ import { type ReactNode } from "react";
 import { getCurrentUser } from "@/actions/user";
 import prisma from "@/lib/prisma";
 import { ROUTES } from "@/lib/routes";
+import { AttendanceHeader } from "./_components/attendance-header";
 
 interface AttendancePageLayoutProps {
   children: ReactNode;
@@ -17,6 +18,8 @@ export default async function AttendancePageLayout({
   }>;
 } & AttendancePageLayoutProps) {
   const { attendance_session_id: attendanceSessionId } = await params;
+
+  if (!attendanceSessionId) redirect(ROUTES.dashboard);
 
   const attendanceSessionData = await prisma.attendanceSession.findFirst({
     where: {
@@ -34,5 +37,11 @@ export default async function AttendancePageLayout({
     redirect(ROUTES.signin);
   }
 
-  return <main>{children}</main>;
+  return (
+    <main>
+      <AttendanceHeader />
+
+      <div className="px-8 py-8 mt-28 overflow-hidden">{children}</div>
+    </main>
+  );
 }
