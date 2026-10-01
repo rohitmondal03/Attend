@@ -4,5 +4,6 @@ export const ROUTES = {
   dashboard: "/dashboard",
   howItWorksSection: "/#how_it_works",
   featuresSection: "/#features",
-  attendance: (sessionId: string) => `/attendance/${sessionId}`,
+  attendance: ({ sessionId }: { sessionId: string }) =>
+    `/attendance/${sessionId}`,
 };

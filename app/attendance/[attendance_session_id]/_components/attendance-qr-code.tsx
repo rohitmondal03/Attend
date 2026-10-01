@@ -42,6 +42,7 @@ export function AttendanceQrCode({ sessionId }: AttendanceQrCodeProps) {
             crossOrigin: "anonymous",
             margin: 4,
           },
+          image: "/logo.png",
         });
         qrInstanceRef.current.append(qrRef.current);
       } else {

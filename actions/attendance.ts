@@ -32,3 +32,32 @@ export const createNewAttendanceSessionAction = async ({
 
   return attendanceSessionId;
 };
+
+export const getUserAttendanceSessionsAction = async () => {
+  const currentUser = await getCurrentUser();
+
+  const attendanceSessions = await prisma.attendanceSession.findMany({
+    where: {
+      teacherId: currentUser.id,
+    },
+    include: {
+      course: {
+        select: {
+          courseName: true,
+          program: true,
+          semester: true,
+        },
+      },
+      _count: {
+        select: {
+          attendanceRecord: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return attendanceSessions;
+};
