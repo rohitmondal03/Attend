@@ -1,7 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Table, Chip, Dropdown } from "@heroui/react";
+import { startTransition } from "react";
+import { useOptimistic } from "react";
+import { Table, Chip, Dropdown, toast } from "@heroui/react";
 import {
   DownloadIcon,
   EllipsisIcon,
@@ -11,6 +13,7 @@ import {
 import { formatDate } from "date-fns";
 import { ATTENDANCE_SESSION_STATUS } from "@/prisma/generated/prisma/enums";
 import { ROUTES } from "@/lib/routes";
+import { endAttendanceSessionStatusAction } from "@/actions/attendance";
 
 interface DashboardAttendanceSessionTableProps {
   attendanceSessions: ({
@@ -35,10 +38,42 @@ interface DashboardAttendanceSessionTableProps {
   })[];
 }
 
+type AttendanceSession =
+  DashboardAttendanceSessionTableProps["attendanceSessions"][number];
+
 export function DashboardAttendanceSessionTable({
   attendanceSessions,
 }: DashboardAttendanceSessionTableProps) {
   const { push: redirect } = useRouter();
+
+  const [optimisticAttendanceSessions, endOptimisticAttendnceSession] =
+    useOptimistic(
+      attendanceSessions,
+      (
+        currentSessions: AttendanceSession[],
+        attendanceSessionIdToEnd: string,
+      ) =>
+        currentSessions.map((session) => {
+          if (session.id === attendanceSessionIdToEnd) {
+            session.status = ATTENDANCE_SESSION_STATUS.UNACTIVE;
+          }
+
+          return session;
+        }),
+    );
+
+  // To end the attendance session - optimistic update
+  const handleStopSession = (sessionId: string) => {
+    startTransition(async () => {
+      endOptimisticAttendnceSession(sessionId);
+
+      toast.success("Attendance session stopped successfully");
+
+      await endAttendanceSessionStatusAction({
+        attendanceSessionId: sessionId,
+      });
+    });
+  };
 
   return (
     <Table>
@@ -55,7 +90,7 @@ export function DashboardAttendanceSessionTable({
             <Table.Column isRowHeader>Actions</Table.Column>
           </Table.Header>
           <Table.Body>
-            {attendanceSessions.map((data, idx) => (
+            {optimisticAttendanceSessions.map((data, idx) => (
               <Table.Row key={idx}>
                 <Table.Cell>{data.course.courseName}</Table.Cell>
                 <Table.Cell>{data.course.program}</Table.Cell>
@@ -72,7 +107,9 @@ export function DashboardAttendanceSessionTable({
                 })}`}</Table.Cell>
                 <Table.Cell>{data._count.attendanceRecord}</Table.Cell>
                 <Table.Cell>
-                  <Chip color="success">{data.status}</Chip>
+                  <Chip color={data.status === "ACTIVE" ? "success" : "danger"}>
+                    {data.status === "UNACTIVE" ? "ENDED" : "ACTIVE"}
+                  </Chip>
                 </Table.Cell>
                 <Table.Cell>
                   <Dropdown>
@@ -93,7 +130,9 @@ export function DashboardAttendanceSessionTable({
                               <EyeIcon className="size-4" />
                               View Session
                             </Dropdown.Item>
-                            <Dropdown.Item>
+                            <Dropdown.Item
+                              onPress={() => handleStopSession(data.id)}
+                            >
                               <StopCircleIcon className="size-4" />
                               Stop Session
                             </Dropdown.Item>

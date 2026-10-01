@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import { type FormEvent, useEffect, useState } from "react";
 import { ClockIcon, PlusIcon } from "lucide-react";
 import { parseTime } from "@internationalized/date";
@@ -19,7 +20,6 @@ import {
 import { createNewAttendanceSessionAction } from "@/actions/attendance";
 import { getUsersCoursesAction } from "@/actions/course";
 import { type Course } from "@/prisma/generated/prisma/client";
-import { useRouter } from "next/navigation";
 import { ROUTES } from "@/lib/routes";
 
 interface CreateAttendanceSessionModalProps {
@@ -83,7 +83,7 @@ export function CreateAttendanceSessionModal({
     })
       .then((createdAttendanceSessionId) => {
         toast.success("Attendance session created successfully");
-        redirect(ROUTES.attendance(createdAttendanceSessionId));
+        redirect(ROUTES.attendance({ sessionId: createdAttendanceSessionId }));
       })
       .catch(() => toast.danger("Failed to create new attendance session"))
       .finally(() => {

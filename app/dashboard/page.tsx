@@ -149,11 +149,21 @@ export default async function DashboardPage() {
 
       {/* Attendance Session Table */}
       <section className="space-y-6" id="sessions">
-        <h1 className="text-2xl font-bold">Your Overall Attendance Sessions</h1>
+        <h1
+          className={`text-2xl font-bold ${
+            attendanceSessions.length === 0 && "text-center text-danger"
+          }`}
+        >
+          {attendanceSessions.length > 0
+            ? "Your Overall Attendance Sessions"
+            : "No Attendance Sessions Found"}
+        </h1>
 
-        <DashboardAttendanceSessionTable
-          attendanceSessions={attendanceSessions}
-        />
+        {attendanceSessions.length > 0 && (
+          <DashboardAttendanceSessionTable
+            attendanceSessions={attendanceSessions}
+          />
+        )}
       </section>
     </div>
   );

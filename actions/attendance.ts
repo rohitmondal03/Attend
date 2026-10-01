@@ -1,7 +1,10 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import crypto from "crypto";
 import prisma from "@/lib/prisma";
+import { ATTENDANCE_SESSION_STATUS } from "@/prisma/generated/prisma/enums";
+import { ROUTES } from "@/lib/routes";
 import { getCurrentUser } from "./user";
 
 export const createNewAttendanceSessionAction = async ({
@@ -60,4 +63,21 @@ export const getUserAttendanceSessionsAction = async () => {
   });
 
   return attendanceSessions;
+};
+
+export const endAttendanceSessionStatusAction = async ({
+  attendanceSessionId,
+}: {
+  attendanceSessionId: string;
+}) => {
+  await prisma.attendanceSession.update({
+    where: {
+      id: attendanceSessionId,
+    },
+    data: {
+      status: ATTENDANCE_SESSION_STATUS.UNACTIVE,
+    },
+  });
+
+  revalidatePath(ROUTES.dashboard);
 };
