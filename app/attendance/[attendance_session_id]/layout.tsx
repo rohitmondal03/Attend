@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { type ReactNode } from "react";
 import { getCurrentUser } from "@/actions/user";
 import prisma from "@/lib/prisma";
@@ -28,7 +28,7 @@ export default async function AttendancePageLayout({
   });
 
   if (!attendanceSessionData) {
-    redirect(ROUTES.signin);
+    return notFound();
   }
 
   const { id: userId } = await getCurrentUser();

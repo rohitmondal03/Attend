@@ -70,14 +70,7 @@ export function DashboardHeader({
   // Sign out user
   const signout = async () => {
     await signoutAction().then(() => {
-      const id = toast(<p className="font-bold">Signed Out Successfully</p>, {
-        variant: "success",
-        actionProps: {
-          children: "Dismiss",
-          onPress: () => toast.close(id),
-          variant: "tertiary",
-        },
-      });
+      toast.success(<p className="font-bold">Signed Out Successfully</p>);
 
       redirect(ROUTES.home);
     });
