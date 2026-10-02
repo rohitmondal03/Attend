@@ -3,7 +3,7 @@ import { type ReactNode } from "react";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { ROUTES } from "@/lib/routes";
-import { DashboardHeader } from "./_components/header";
+import { DashboardHeader } from "./_components/dashboard-header";
 
 export default async function DashboardLayout({
   children,
@@ -19,13 +19,13 @@ export default async function DashboardLayout({
   }
 
   return (
-    <main className="space-y-8">
+    <main>
       <DashboardHeader
         userEmail={sessionData.user.email}
         userName={sessionData.user.name}
       />
 
-      <div className="px-8 py-8 rounded-3xl">{children}</div>
+      <div className="px-8 py-8 rounded-3xl mt-28">{children}</div>
     </main>
   );
 }

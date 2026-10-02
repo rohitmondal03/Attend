@@ -1,5 +1,6 @@
 "use server";
 
+import crypto from "crypto";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "./user";
 
@@ -16,11 +17,16 @@ export const createNewAttendanceSessionAction = async ({
 }) => {
   const currentUser = await getCurrentUser();
 
-  console.log(courseId, classLocation, classStartTime, classEndTime);
+  const qrSecret = crypto.randomBytes(32).toString("hex");
 
-  // await prisma.attendanceSession.create({
-  //   data: {
-
-  //   }
-  // })
+  await prisma.attendanceSession.create({
+    data: {
+      courseId,
+      classLocation,
+      classEndTime,
+      classStartTime,
+      teacherId: currentUser.id,
+      qrSecret,
+    },
+  });
 };
