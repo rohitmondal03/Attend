@@ -20,8 +20,18 @@ export type CourseModel = runtime.Types.Result.DefaultSelection<Prisma.$CoursePa
 
 export type AggregateCourse = {
   _count: CourseCountAggregateOutputType | null
+  _avg: CourseAvgAggregateOutputType | null
+  _sum: CourseSumAggregateOutputType | null
   _min: CourseMinAggregateOutputType | null
   _max: CourseMaxAggregateOutputType | null
+}
+
+export type CourseAvgAggregateOutputType = {
+  semester: number | null
+}
+
+export type CourseSumAggregateOutputType = {
+  semester: number | null
 }
 
 export type CourseMinAggregateOutputType = {
@@ -29,7 +39,7 @@ export type CourseMinAggregateOutputType = {
   teacherId: string | null
   courseName: string | null
   program: string | null
-  semester: string | null
+  semester: number | null
 }
 
 export type CourseMaxAggregateOutputType = {
@@ -37,7 +47,7 @@ export type CourseMaxAggregateOutputType = {
   teacherId: string | null
   courseName: string | null
   program: string | null
-  semester: string | null
+  semester: number | null
 }
 
 export type CourseCountAggregateOutputType = {
@@ -49,6 +59,14 @@ export type CourseCountAggregateOutputType = {
   _all: number
 }
 
+
+export type CourseAvgAggregateInputType = {
+  semester?: true
+}
+
+export type CourseSumAggregateInputType = {
+  semester?: true
+}
 
 export type CourseMinAggregateInputType = {
   id?: true
@@ -113,6 +131,18 @@ export type CourseAggregateArgs<ExtArgs extends runtime.Types.Extensions.Interna
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: CourseAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: CourseSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: CourseMinAggregateInputType
@@ -143,6 +173,8 @@ export type CourseGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   _count?: CourseCountAggregateInputType | true
+  _avg?: CourseAvgAggregateInputType
+  _sum?: CourseSumAggregateInputType
   _min?: CourseMinAggregateInputType
   _max?: CourseMaxAggregateInputType
 }
@@ -152,8 +184,10 @@ export type CourseGroupByOutputType = {
   teacherId: string
   courseName: string
   program: string
-  semester: string
+  semester: number
   _count: CourseCountAggregateOutputType | null
+  _avg: CourseAvgAggregateOutputType | null
+  _sum: CourseSumAggregateOutputType | null
   _min: CourseMinAggregateOutputType | null
   _max: CourseMaxAggregateOutputType | null
 }
@@ -181,7 +215,7 @@ export type CourseWhereInput = {
   teacherId?: Prisma.StringFilter<"Course"> | string
   courseName?: Prisma.StringFilter<"Course"> | string
   program?: Prisma.StringFilter<"Course"> | string
-  semester?: Prisma.StringFilter<"Course"> | string
+  semester?: Prisma.IntFilter<"Course"> | number
   teacher?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   attendanceSessions?: Prisma.AttendanceSessionListRelationFilter
 }
@@ -204,7 +238,7 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
   teacherId?: Prisma.StringFilter<"Course"> | string
   courseName?: Prisma.StringFilter<"Course"> | string
   program?: Prisma.StringFilter<"Course"> | string
-  semester?: Prisma.StringFilter<"Course"> | string
+  semester?: Prisma.IntFilter<"Course"> | number
   teacher?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   attendanceSessions?: Prisma.AttendanceSessionListRelationFilter
 }, "id">
@@ -216,8 +250,10 @@ export type CourseOrderByWithAggregationInput = {
   program?: Prisma.SortOrder
   semester?: Prisma.SortOrder
   _count?: Prisma.CourseCountOrderByAggregateInput
+  _avg?: Prisma.CourseAvgOrderByAggregateInput
   _max?: Prisma.CourseMaxOrderByAggregateInput
   _min?: Prisma.CourseMinOrderByAggregateInput
+  _sum?: Prisma.CourseSumOrderByAggregateInput
 }
 
 export type CourseScalarWhereWithAggregatesInput = {
@@ -228,14 +264,14 @@ export type CourseScalarWhereWithAggregatesInput = {
   teacherId?: Prisma.StringWithAggregatesFilter<"Course"> | string
   courseName?: Prisma.StringWithAggregatesFilter<"Course"> | string
   program?: Prisma.StringWithAggregatesFilter<"Course"> | string
-  semester?: Prisma.StringWithAggregatesFilter<"Course"> | string
+  semester?: Prisma.IntWithAggregatesFilter<"Course"> | number
 }
 
 export type CourseCreateInput = {
   id?: string
   courseName: string
   program: string
-  semester: string
+  semester: number
   teacher: Prisma.UserCreateNestedOneWithoutCourseInput
   attendanceSessions?: Prisma.AttendanceSessionCreateNestedManyWithoutCourseInput
 }
@@ -245,7 +281,7 @@ export type CourseUncheckedCreateInput = {
   teacherId: string
   courseName: string
   program: string
-  semester: string
+  semester: number
   attendanceSessions?: Prisma.AttendanceSessionUncheckedCreateNestedManyWithoutCourseInput
 }
 
@@ -253,7 +289,7 @@ export type CourseUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
-  semester?: Prisma.StringFieldUpdateOperationsInput | string
+  semester?: Prisma.IntFieldUpdateOperationsInput | number
   teacher?: Prisma.UserUpdateOneRequiredWithoutCourseNestedInput
   attendanceSessions?: Prisma.AttendanceSessionUpdateManyWithoutCourseNestedInput
 }
@@ -263,7 +299,7 @@ export type CourseUncheckedUpdateInput = {
   teacherId?: Prisma.StringFieldUpdateOperationsInput | string
   courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
-  semester?: Prisma.StringFieldUpdateOperationsInput | string
+  semester?: Prisma.IntFieldUpdateOperationsInput | number
   attendanceSessions?: Prisma.AttendanceSessionUncheckedUpdateManyWithoutCourseNestedInput
 }
 
@@ -272,14 +308,14 @@ export type CourseCreateManyInput = {
   teacherId: string
   courseName: string
   program: string
-  semester: string
+  semester: number
 }
 
 export type CourseUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
-  semester?: Prisma.StringFieldUpdateOperationsInput | string
+  semester?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type CourseUncheckedUpdateManyInput = {
@@ -287,7 +323,7 @@ export type CourseUncheckedUpdateManyInput = {
   teacherId?: Prisma.StringFieldUpdateOperationsInput | string
   courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
-  semester?: Prisma.StringFieldUpdateOperationsInput | string
+  semester?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type CourseListRelationFilter = {
@@ -313,6 +349,10 @@ export type CourseCountOrderByAggregateInput = {
   semester?: Prisma.SortOrder
 }
 
+export type CourseAvgOrderByAggregateInput = {
+  semester?: Prisma.SortOrder
+}
+
 export type CourseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   teacherId?: Prisma.SortOrder
@@ -326,6 +366,10 @@ export type CourseMinOrderByAggregateInput = {
   teacherId?: Prisma.SortOrder
   courseName?: Prisma.SortOrder
   program?: Prisma.SortOrder
+  semester?: Prisma.SortOrder
+}
+
+export type CourseSumOrderByAggregateInput = {
   semester?: Prisma.SortOrder
 }
 
@@ -385,11 +429,19 @@ export type CourseUpdateOneRequiredWithoutAttendanceSessionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CourseUpdateToOneWithWhereWithoutAttendanceSessionsInput, Prisma.CourseUpdateWithoutAttendanceSessionsInput>, Prisma.CourseUncheckedUpdateWithoutAttendanceSessionsInput>
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type CourseCreateWithoutTeacherInput = {
   id?: string
   courseName: string
   program: string
-  semester: string
+  semester: number
   attendanceSessions?: Prisma.AttendanceSessionCreateNestedManyWithoutCourseInput
 }
 
@@ -397,7 +449,7 @@ export type CourseUncheckedCreateWithoutTeacherInput = {
   id?: string
   courseName: string
   program: string
-  semester: string
+  semester: number
   attendanceSessions?: Prisma.AttendanceSessionUncheckedCreateNestedManyWithoutCourseInput
 }
 
@@ -435,14 +487,14 @@ export type CourseScalarWhereInput = {
   teacherId?: Prisma.StringFilter<"Course"> | string
   courseName?: Prisma.StringFilter<"Course"> | string
   program?: Prisma.StringFilter<"Course"> | string
-  semester?: Prisma.StringFilter<"Course"> | string
+  semester?: Prisma.IntFilter<"Course"> | number
 }
 
 export type CourseCreateWithoutAttendanceSessionsInput = {
   id?: string
   courseName: string
   program: string
-  semester: string
+  semester: number
   teacher: Prisma.UserCreateNestedOneWithoutCourseInput
 }
 
@@ -451,7 +503,7 @@ export type CourseUncheckedCreateWithoutAttendanceSessionsInput = {
   teacherId: string
   courseName: string
   program: string
-  semester: string
+  semester: number
 }
 
 export type CourseCreateOrConnectWithoutAttendanceSessionsInput = {
@@ -474,7 +526,7 @@ export type CourseUpdateWithoutAttendanceSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
-  semester?: Prisma.StringFieldUpdateOperationsInput | string
+  semester?: Prisma.IntFieldUpdateOperationsInput | number
   teacher?: Prisma.UserUpdateOneRequiredWithoutCourseNestedInput
 }
 
@@ -483,21 +535,21 @@ export type CourseUncheckedUpdateWithoutAttendanceSessionsInput = {
   teacherId?: Prisma.StringFieldUpdateOperationsInput | string
   courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
-  semester?: Prisma.StringFieldUpdateOperationsInput | string
+  semester?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type CourseCreateManyTeacherInput = {
   id?: string
   courseName: string
   program: string
-  semester: string
+  semester: number
 }
 
 export type CourseUpdateWithoutTeacherInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
-  semester?: Prisma.StringFieldUpdateOperationsInput | string
+  semester?: Prisma.IntFieldUpdateOperationsInput | number
   attendanceSessions?: Prisma.AttendanceSessionUpdateManyWithoutCourseNestedInput
 }
 
@@ -505,7 +557,7 @@ export type CourseUncheckedUpdateWithoutTeacherInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
-  semester?: Prisma.StringFieldUpdateOperationsInput | string
+  semester?: Prisma.IntFieldUpdateOperationsInput | number
   attendanceSessions?: Prisma.AttendanceSessionUncheckedUpdateManyWithoutCourseNestedInput
 }
 
@@ -513,7 +565,7 @@ export type CourseUncheckedUpdateManyWithoutTeacherInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseName?: Prisma.StringFieldUpdateOperationsInput | string
   program?: Prisma.StringFieldUpdateOperationsInput | string
-  semester?: Prisma.StringFieldUpdateOperationsInput | string
+  semester?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -608,7 +660,7 @@ export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     teacherId: string
     courseName: string
     program: string
-    semester: string
+    semester: number
   }, ExtArgs["result"]["course"]>
   composites: {}
 }
@@ -1038,7 +1090,7 @@ export interface CourseFieldRefs {
   readonly teacherId: Prisma.FieldRef<"Course", 'String'>
   readonly courseName: Prisma.FieldRef<"Course", 'String'>
   readonly program: Prisma.FieldRef<"Course", 'String'>
-  readonly semester: Prisma.FieldRef<"Course", 'String'>
+  readonly semester: Prisma.FieldRef<"Course", 'Int'>
 }
     
 
