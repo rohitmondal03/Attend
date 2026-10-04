@@ -1,0 +1,16 @@
+/*
+  Warnings:
+
+  - The values [UNACTIVE] on the enum `ATTENDANCE_SESSION_STATUS` will be removed. If these variants are still used in the database, this will fail.
+
+*/
+-- AlterEnum
+BEGIN;
+CREATE TYPE "ATTENDANCE_SESSION_STATUS_new" AS ENUM ('ACTIVE', 'INACTIVE');
+ALTER TABLE "public"."attendance_session" ALTER COLUMN "status" DROP DEFAULT;
+ALTER TABLE "attendance_session" ALTER COLUMN "status" TYPE "ATTENDANCE_SESSION_STATUS_new" USING ("status"::text::"ATTENDANCE_SESSION_STATUS_new");
+ALTER TYPE "ATTENDANCE_SESSION_STATUS" RENAME TO "ATTENDANCE_SESSION_STATUS_old";
+ALTER TYPE "ATTENDANCE_SESSION_STATUS_new" RENAME TO "ATTENDANCE_SESSION_STATUS";
+DROP TYPE "public"."ATTENDANCE_SESSION_STATUS_old";
+ALTER TABLE "attendance_session" ALTER COLUMN "status" SET DEFAULT 'ACTIVE';
+COMMIT;
