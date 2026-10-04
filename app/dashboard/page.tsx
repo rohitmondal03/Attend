@@ -1,7 +1,12 @@
-import { headers } from "next/headers";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import { Table, Chip, Dropdown, Card, Separator } from "@heroui/react";
+import {
+  Table,
+  Chip,
+  Dropdown,
+  Card,
+  Separator,
+  buttonVariants,
+} from "@heroui/react";
 import {
   LayersIcon,
   CalendarIcon,
@@ -10,9 +15,11 @@ import {
   DownloadIcon,
   EllipsisIcon,
   EyeIcon,
+  MoveDownIcon,
 } from "lucide-react";
-import { auth } from "@/lib/auth";
 import { ROUTES } from "@/lib/routes";
+import { getCurrentUser } from "@/actions/user";
+import { DashboardCourseButton } from "./_components/dashboard-course-button";
 
 const DEMO_SESSIONS_TABLE = new Array(20).fill({
   subject: "AI Tools for Research",
@@ -24,21 +31,31 @@ const DEMO_SESSIONS_TABLE = new Array(20).fill({
 });
 
 export default async function DashboardPage() {
-  const sessionData = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  if (!sessionData || !sessionData.user) {
-    redirect(ROUTES.signin);
-  }
+  const userData = await getCurrentUser();
 
   return (
     <div className="space-y-12">
-      <h1 className="text-3xl font-bold">
-        <span className="text-black/60">Welcome to your Dashboard,</span>{" "}
-        {sessionData.user.name}
-      </h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold">
+          <span className="text-black/60">Welcome to your Dashboard,</span>{" "}
+          {userData.name}
+        </h1>
+        <div className="flex items-center justify-center gap-4 text-lg">
+          <Link
+            href={ROUTES.dashboard + "#sessions"}
+            className={buttonVariants({
+              variant: "primary",
+              className: "font-bold",
+            })}
+          >
+            <MoveDownIcon />
+            Attendances Sessions
+          </Link>
+          <DashboardCourseButton />
+        </div>
+      </div>
 
+      {/* Overview Cards */}
       <section className="grid grid-cols-4 gap-4">
         {/* Card 1 – Total Sessions */}
         <Card className="flex h-full flex-col justify-between">
@@ -137,7 +154,8 @@ export default async function DashboardPage() {
 
       <Separator orientation="horizontal" className="bg-accent-foreground" />
 
-      <div className="space-y-6">
+      {/* Attendance Session Table */}
+      <section className="space-y-6" id="sessions">
         <h1 className="text-2xl font-bold">Your Overall Attendance Sessions</h1>
 
         <Table>
@@ -184,7 +202,7 @@ export default async function DashboardPage() {
             </Table.Content>
           </Table.ScrollContainer>
         </Table>
-      </div>
+      </section>
     </div>
   );
 }
