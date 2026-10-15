@@ -1,8 +1,13 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import { Button } from "@heroui/react";
-import { CoursesTableModal } from "./courses-table-modal";
+import { NotebookIcon } from "lucide-react";
+
+const CoursesTableModal = dynamic(() =>
+  import("./courses-table-modal").then((mod) => mod.CoursesTableModal),
+);
 
 export function DashboardCourseButton() {
   const [isCourseModalOpen, setIsCourseModalOpen] = useState(false);
@@ -10,10 +15,11 @@ export function DashboardCourseButton() {
   return (
     <>
       <Button
-        className="font-bold"
+        className={"font-semibold"}
         variant="danger-soft"
         onPress={() => setIsCourseModalOpen(true)}
       >
+        <NotebookIcon />
         Your Courses
       </Button>
       <CoursesTableModal

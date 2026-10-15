@@ -4,6 +4,7 @@ export const ROUTES = {
   dashboard: "/dashboard",
   howItWorksSection: "/#how_it_works",
   featuresSection: "/#features",
-  profileSetting: "/profile-setting",
-  sessions: "/sessions",
+  attendance: ({ sessionId }: { sessionId: string }) =>
+    `/attendance/${sessionId}`,
+  markAttendance: ({ token }: { token: string }) => `/mark-attendance/${token}`,
 };

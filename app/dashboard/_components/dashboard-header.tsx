@@ -70,14 +70,7 @@ export function DashboardHeader({
   // Sign out user
   const signout = async () => {
     await signoutAction().then(() => {
-      const id = toast(<p className="font-bold">Signed Out Successfully</p>, {
-        variant: "success",
-        actionProps: {
-          children: "Dismiss",
-          onPress: () => toast.close(id),
-          variant: "tertiary",
-        },
-      });
+      toast.success(<p className="font-bold">Signed Out Successfully</p>);
 
       redirect(ROUTES.home);
     });
@@ -172,9 +165,19 @@ export function DashboardHeader({
                     id="attendance-sessions"
                     textValue="Attendance Sessions"
                     className="font-bold"
+                    onPress={() => redirect(ROUTES.dashboard + "#sessions")}
                   >
                     <BookmarkIcon className="size-4" />
                     <Label className="font-semibold">Attendance Sessions</Label>
+                  </DropdownItem>
+                  <DropdownItem
+                    id="add-new-course"
+                    textValue="Add New Course"
+                    className="font-bold"
+                    onPress={() => setIsNewCourseModalOpen(true)}
+                  >
+                    <LayersPlusIcon className="size-4" />
+                    <Label className="font-semibold">Add New Course</Label>
                   </DropdownItem>
                 </DropdownSection>
                 <Separator orientation="horizontal" />
@@ -183,7 +186,7 @@ export function DashboardHeader({
                     id="copy-link"
                     textValue="Copy link"
                     variant="danger"
-                    onClick={signout}
+                    onPress={signout}
                   >
                     <LogOutIcon className="size-4 text-danger" />
                     <Label className="font-semibold">Sign Out</Label>

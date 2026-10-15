@@ -139,7 +139,7 @@ export default function HomePage() {
       <Navbar />
 
       {/* Hero section */}
-      <section className="flex flex-col items-center justify-center my-48 space-y-10 text-center">
+      <section className="flex flex-col items-center justify-center h-screen mb-0 space-y-10 text-center">
         <motion.h1
           className="font_changaone flex items-center justify-center text-6xl w-full"
           initial={{ opacity: 0, y: -10 }}
@@ -173,7 +173,8 @@ export default function HomePage() {
             className={buttonVariants({
               size: "lg",
               variant: "primary",
-              className: "font-bold text-lg px-8 py-6 group transition-all ease-out",
+              className:
+                "font-bold text-lg px-8 py-6 group transition-all ease-out",
             })}
           >
             Login as Teacher

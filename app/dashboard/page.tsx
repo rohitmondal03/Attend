@@ -1,37 +1,27 @@
 import Link from "next/link";
-import {
-  Table,
-  Chip,
-  Dropdown,
-  Card,
-  Separator,
-  buttonVariants,
-} from "@heroui/react";
+import { Chip, Card, Separator, buttonVariants } from "@heroui/react";
 import {
   LayersIcon,
   CalendarIcon,
   ClockIcon,
   BookOpenIcon,
-  DownloadIcon,
-  EllipsisIcon,
   EyeIcon,
   MoveDownIcon,
 } from "lucide-react";
+import { formatDate } from "date-fns";
 import { ROUTES } from "@/lib/routes";
 import { getCurrentUser } from "@/actions/user";
+import { getUserAttendanceSessionsAction } from "@/actions/attendance";
 import { DashboardCourseButton } from "./_components/dashboard-course-button";
-
-const DEMO_SESSIONS_TABLE = new Array(20).fill({
-  subject: "AI Tools for Research",
-  class: "CC3 5244",
-  date: new Date().toLocaleDateString(),
-  time: "2.30PM - 4.30PM",
-  attendanceCount: "106",
-  status: "Active",
-});
+import { DashboardAttendanceSessionTable } from "./_components/dashboard-attendance-session-table";
 
 export default async function DashboardPage() {
   const userData = await getCurrentUser();
+
+  // get user's attendance sessions, in desccendeding order of 'createdAt'
+  const attendanceSessions = await getUserAttendanceSessionsAction();
+
+  const latestSession = attendanceSessions[0];
 
   return (
     <div className="space-y-12">
@@ -40,16 +30,16 @@ export default async function DashboardPage() {
           <span className="text-black/60">Welcome to your Dashboard,</span>{" "}
           {userData.name}
         </h1>
-        <div className="flex items-center justify-center gap-4 text-lg">
+        <div className="flex items-center justify-center gap-6 text-lg">
           <Link
             href={ROUTES.dashboard + "#sessions"}
             className={buttonVariants({
               variant: "primary",
-              className: "font-bold",
+              className: "font-semibold",
             })}
           >
             <MoveDownIcon />
-            Attendances Sessions
+            Attendance Sessions
           </Link>
           <DashboardCourseButton />
         </div>
@@ -140,14 +130,25 @@ export default async function DashboardPage() {
             </Card.Description>
           </Card.Header>
           <Card.Footer>
-            <Link
-              aria-label="View most recent session: Maths, B.Tech 3rd Sem"
-              href="/dashboard"
-              className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition-colors bg-accent/30 hover:bg-accent/50"
-            >
-              <span>Maths — B.Tech 3rd Sem · 23 Aug</span>
-              <EyeIcon className="text-primary size-4 shrink-0" />
-            </Link>
+            {latestSession ? (
+              <Link
+                aria-label="View most recent session: Maths, B.Tech 3rd Sem"
+                href={ROUTES.attendance({ sessionId: latestSession.id })}
+                className="flex gap-4 w-full items-center justify-between rounded-lg px-3 py-2 transition-colors bg-accent/30 hover:bg-accent/50"
+              >
+                <span className="text-xs">
+                  {latestSession.course.courseName} on{" "}
+                  <span className="font-semibold">
+                    {formatDate(latestSession.classStartTime, "dd MMM yyyy")}
+                  </span>
+                </span>
+                <EyeIcon className="text-primary size-4 shrink-0" />
+              </Link>
+            ) : (
+              <p className="w-full py-2 px-3 text-center text-danger bg-danger-soft rounded-xl">
+                No Sessions Found
+              </p>
+            )}
           </Card.Footer>
         </Card>
       </section>
@@ -156,52 +157,21 @@ export default async function DashboardPage() {
 
       {/* Attendance Session Table */}
       <section className="space-y-6" id="sessions">
-        <h1 className="text-2xl font-bold">Your Overall Attendance Sessions</h1>
+        <h1
+          className={`text-2xl font-bold ${
+            attendanceSessions.length === 0 && "text-center text-danger"
+          }`}
+        >
+          {attendanceSessions.length > 0
+            ? "Your Overall Attendance Sessions"
+            : "No Attendance Sessions Found"}
+        </h1>
 
-        <Table>
-          <Table.ScrollContainer>
-            <Table.Content aria-label="Team members" className="">
-              <Table.Header>
-                <Table.Column isRowHeader>Subject</Table.Column>
-                <Table.Column isRowHeader>Class/Section</Table.Column>
-                <Table.Column isRowHeader>Date</Table.Column>
-                <Table.Column isRowHeader>Time</Table.Column>
-                <Table.Column isRowHeader>Attendance</Table.Column>
-                <Table.Column isRowHeader>Status</Table.Column>
-                <Table.Column isRowHeader>Actions</Table.Column>
-              </Table.Header>
-              <Table.Body>
-                {DEMO_SESSIONS_TABLE.map((data, idx) => (
-                  <Table.Row key={idx}>
-                    <Table.Cell>{data.subject}</Table.Cell>
-                    <Table.Cell>{data.class}</Table.Cell>
-                    <Table.Cell>{data.date}</Table.Cell>
-                    <Table.Cell>{data.time}</Table.Cell>
-                    <Table.Cell>{data.attendanceCount}</Table.Cell>
-                    <Table.Cell>
-                      <Chip color="accent">{data.status}</Chip>
-                    </Table.Cell>
-                    <Table.Cell>
-                      <Dropdown>
-                        <Dropdown.Trigger>
-                          <EllipsisIcon />
-                        </Dropdown.Trigger>
-                        <Dropdown.Popover>
-                          <Dropdown.Menu className="font-bold">
-                            <Dropdown.Item>
-                              <DownloadIcon className="size-4" />
-                              Download Spreadsheet
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown.Popover>
-                      </Dropdown>
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table.Content>
-          </Table.ScrollContainer>
-        </Table>
+        {attendanceSessions.length > 0 && (
+          <DashboardAttendanceSessionTable
+            attendanceSessions={attendanceSessions}
+          />
+        )}
       </section>
     </div>
   );
