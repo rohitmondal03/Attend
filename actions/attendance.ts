@@ -65,7 +65,7 @@ export const getUserAttendanceSessionsAction = async () => {
   return attendanceSessions;
 };
 
-export const endAttendanceSessionStatusAction = async ({
+export const endAttendanceSessionAction = async ({
   attendanceSessionId,
 }: {
   attendanceSessionId: string;
@@ -75,7 +75,7 @@ export const endAttendanceSessionStatusAction = async ({
       id: attendanceSessionId,
     },
     data: {
-      status: ATTENDANCE_SESSION_STATUS.UNACTIVE,
+      status: ATTENDANCE_SESSION_STATUS.INACTIVE,
     },
   });
 

@@ -30,16 +30,16 @@ export default async function DashboardPage() {
           <span className="text-black/60">Welcome to your Dashboard,</span>{" "}
           {userData.name}
         </h1>
-        <div className="flex items-center justify-center gap-4 text-lg">
+        <div className="flex items-center justify-center gap-6 text-lg">
           <Link
             href={ROUTES.dashboard + "#sessions"}
             className={buttonVariants({
               variant: "primary",
-              className: "font-bold",
+              className: "font-semibold",
             })}
           >
             <MoveDownIcon />
-            Attendances Sessions
+            Attendance Sessions
           </Link>
           <DashboardCourseButton />
         </div>
@@ -130,17 +130,25 @@ export default async function DashboardPage() {
             </Card.Description>
           </Card.Header>
           <Card.Footer>
-            <Link
-              aria-label="View most recent session: Maths, B.Tech 3rd Sem"
-              href="/dashboard"
-              className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition-colors bg-accent/30 hover:bg-accent/50"
-            >
-              <span>
-                {latestSession.course.courseName} —{" "}
-                {formatDate(latestSession.classStartTime, "MMMM dd'th', yyyy")}
-              </span>
-              <EyeIcon className="text-primary size-4 shrink-0" />
-            </Link>
+            {latestSession ? (
+              <Link
+                aria-label="View most recent session: Maths, B.Tech 3rd Sem"
+                href={ROUTES.attendance({ sessionId: latestSession.id })}
+                className="flex gap-4 w-full items-center justify-between rounded-lg px-3 py-2 transition-colors bg-accent/30 hover:bg-accent/50"
+              >
+                <span className="text-xs">
+                  {latestSession.course.courseName} on{" "}
+                  <span className="font-semibold">
+                    {formatDate(latestSession.classStartTime, "dd MMM yyyy")}
+                  </span>
+                </span>
+                <EyeIcon className="text-primary size-4 shrink-0" />
+              </Link>
+            ) : (
+              <p className="w-full py-2 px-3 text-center text-danger bg-danger-soft rounded-xl">
+                No Sessions Found
+              </p>
+            )}
           </Card.Footer>
         </Card>
       </section>

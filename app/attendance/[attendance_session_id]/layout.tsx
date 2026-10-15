@@ -37,11 +37,5 @@ export default async function AttendancePageLayout({
     redirect(ROUTES.signin);
   }
 
-  return (
-    <main>
-      <AttendanceHeader />
-
-      <div className="px-8 py-8 mt-28 overflow-hidden">{children}</div>
-    </main>
-  );
+  return <main>{children}</main>;
 }

@@ -15,7 +15,7 @@ export function DashboardCourseButton() {
   return (
     <>
       <Button
-        className="font-bold"
+        className={"font-semibold"}
         variant="danger-soft"
         onPress={() => setIsCourseModalOpen(true)}
       >

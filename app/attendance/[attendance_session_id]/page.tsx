@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 import { ROUTES } from "@/lib/routes";
 import { MarkedStudent } from "./_components/marked-student-table";
 import { InactiveSession } from "./_components/inactive-session";
-import { QrCodeSection } from "./_components/qr-code-section";
+import { QrCodeDisplay } from "./_components/qr-code-display";
 
 export default async function AttendancePage({
   params,
@@ -23,16 +23,16 @@ export default async function AttendancePage({
     },
   });
 
-  if (sessionData === null) redirect(ROUTES.dashboard);
+  if (!sessionData) redirect(ROUTES.dashboard);
 
-  return sessionData.status === "UNACTIVE" ? (
-    <InactiveSession sessionId={sessionId} />
+  return sessionData.status === "INACTIVE" ? (
+    <div className="grid place-items-center h-screen">
+      <InactiveSession sessionId={sessionId} />
+    </div>
   ) : (
-    <div className="flex items-center justify-center h-[calc(100vh-15rem)]">
-      <div className="grid grid-cols-2 gap-12 w-full max-w-6xl">
-        <QrCodeSection sessionId={sessionId} />
-        <MarkedStudent />
-      </div>
+    <div className="grid grid-cols-2 gap-12 w-full p-10 items-center justify-center">
+      <QrCodeDisplay sessionId={sessionId} />
+      <MarkedStudent />
     </div>
   );
 }

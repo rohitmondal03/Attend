@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { startTransition } from "react";
 import { useOptimistic } from "react";
 import { Table, Chip, Dropdown, toast } from "@heroui/react";
@@ -13,7 +12,7 @@ import {
 import { formatDate } from "date-fns";
 import { ATTENDANCE_SESSION_STATUS } from "@/prisma/generated/prisma/enums";
 import { ROUTES } from "@/lib/routes";
-import { endAttendanceSessionStatusAction } from "@/actions/attendance";
+import { endAttendanceSessionAction } from "@/actions/attendance";
 
 interface DashboardAttendanceSessionTableProps {
   attendanceSessions: ({
@@ -44,9 +43,7 @@ type AttendanceSession =
 export function DashboardAttendanceSessionTable({
   attendanceSessions,
 }: DashboardAttendanceSessionTableProps) {
-  const { push: redirect } = useRouter();
-
-  const [optimisticAttendanceSessions, endOptimisticAttendnceSession] =
+  const [optimisticAttendanceSessions, endOptimisticAttendanceSession] =
     useOptimistic(
       attendanceSessions,
       (
@@ -54,9 +51,8 @@ export function DashboardAttendanceSessionTable({
         attendanceSessionIdToEnd: string,
       ) =>
         currentSessions.map((session) => {
-          if (session.id === attendanceSessionIdToEnd) {
-            session.status = ATTENDANCE_SESSION_STATUS.UNACTIVE;
-          }
+          if (session.id === attendanceSessionIdToEnd)
+            session.status = ATTENDANCE_SESSION_STATUS.INACTIVE;
 
           return session;
         }),
@@ -65,11 +61,11 @@ export function DashboardAttendanceSessionTable({
   // To end the attendance session - optimistic update
   const handleStopSession = (sessionId: string) => {
     startTransition(async () => {
-      endOptimisticAttendnceSession(sessionId);
+      endOptimisticAttendanceSession(sessionId);
 
       toast.success("Attendance session stopped successfully");
 
-      await endAttendanceSessionStatusAction({
+      await endAttendanceSessionAction({
         attendanceSessionId: sessionId,
       });
     });
@@ -108,7 +104,7 @@ export function DashboardAttendanceSessionTable({
                 <Table.Cell>{data._count.attendanceRecord}</Table.Cell>
                 <Table.Cell>
                   <Chip color={data.status === "ACTIVE" ? "success" : "danger"}>
-                    {data.status === "UNACTIVE" ? "ENDED" : "ACTIVE"}
+                    {data.status === "INACTIVE" ? "ENDED" : "ACTIVE"}
                   </Chip>
                 </Table.Cell>
                 <Table.Cell>
@@ -122,8 +118,9 @@ export function DashboardAttendanceSessionTable({
                           <>
                             <Dropdown.Item
                               onPress={() =>
-                                redirect(
+                                window.open(
                                   ROUTES.attendance({ sessionId: data.id }),
+                                  "_blank",
                                 )
                               }
                             >
@@ -132,6 +129,7 @@ export function DashboardAttendanceSessionTable({
                             </Dropdown.Item>
                             <Dropdown.Item
                               onPress={() => handleStopSession(data.id)}
+                              className="text-danger"
                             >
                               <StopCircleIcon className="size-4" />
                               Stop Session
