@@ -15,7 +15,10 @@ export async function GET(
   }
 
   // If session is accessed by another teacher
-  const session = await prisma.attendanceSession.findUnique({ where: { id } });
+  const session = await prisma.attendanceSession.findUnique({
+    where: { id },
+    select: { id: true, teacherId: true, status: true, qrSecret: true },
+  });
   if (!session || session.teacherId !== authSession.id) {
     return Response.json({ error: "Not found" }, { status: 404 });
   }
@@ -29,7 +32,7 @@ export async function GET(
 
   const origin =
     process.env.NODE_ENV === "development"
-      ? "http://localhost:3000/"
+      ? "http://localhost:3000"
       : process.env.NEXT_PUBLIC_APP_URL;
 
   return Response.json({

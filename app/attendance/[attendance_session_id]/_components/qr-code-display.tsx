@@ -1,18 +1,34 @@
 "use client";
 
+import { useEffect, useMemo, useRef } from "react";
 import { Card } from "@heroui/react";
 import { QrCodeIcon, ClockIcon } from "lucide-react";
-import { useEffect, useRef } from "react";
 
 interface QrCodeSectionProps {
   sessionId: string;
+  sessionStartTime: Date;
 }
 
-export function QrCodeDisplay({ sessionId }: QrCodeSectionProps) {
+export function QrCodeDisplay({
+  sessionId,
+  sessionStartTime,
+}: QrCodeSectionProps) {
   const qrRef = useRef<HTMLDivElement>(null);
   const qrInstanceRef = useRef<InstanceType<
     typeof import("qr-code-styling").default
   > | null>(null);
+
+  const formattedSessionStartTime = useMemo(() => {
+    const date = new Date(sessionStartTime);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    const amOrpm = hours >= 12 ? "PM" : "AM";
+    const formattedHours = hours % 12 || 12;
+    const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+
+    return `${formattedHours}:${formattedMinutes} ${amOrpm}`;
+  }, [sessionStartTime]);
 
   useEffect(() => {
     let cancelled = false;
@@ -92,7 +108,9 @@ export function QrCodeDisplay({ sessionId }: QrCodeSectionProps) {
           <ClockIcon className="size-4" />
           <span>
             Session started at{" "}
-            <span className="font-semibold text-foreground">2:30 PM</span>
+            <span className="font-semibold text-foreground">
+              {formattedSessionStartTime}
+            </span>
           </span>
         </div>
       </Card>

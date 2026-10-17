@@ -6,5 +6,4 @@ export const ROUTES = {
   featuresSection: "/#features",
   attendance: ({ sessionId }: { sessionId: string }) =>
     `/attendance/${sessionId}`,
-  markAttendance: ({ token }: { token: string }) => `/mark-attendance/${token}`,
 };

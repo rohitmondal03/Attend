@@ -20,6 +20,7 @@ export default async function AttendancePage({
     },
     select: {
       status: true,
+      createdAt: true,
     },
   });
 
@@ -31,7 +32,10 @@ export default async function AttendancePage({
     </div>
   ) : (
     <div className="grid grid-cols-2 gap-12 w-full p-10 items-center justify-center">
-      <QrCodeDisplay sessionId={sessionId} />
+      <QrCodeDisplay
+        sessionId={sessionId}
+        sessionStartTime={sessionData.createdAt}
+      />
       <MarkedStudent />
     </div>
   );

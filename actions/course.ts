@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "./user";
+import { ERROR_MESSAGE } from "@/lib/error";
 
 export const addNewCourseAction = async ({
   courseName,
@@ -15,7 +16,7 @@ export const addNewCourseAction = async ({
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
-    throw new Error("User not found !!");
+    throw new Error(ERROR_MESSAGE.userNotPresent);
   }
 
   await prisma.course.create({
@@ -32,7 +33,7 @@ export const getUsersCoursesAction = async () => {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
-    throw new Error("User not found !!");
+    throw new Error(ERROR_MESSAGE.userNotPresent);
   }
 
   const courses = await prisma.course.findMany({
