@@ -26,19 +26,19 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-12">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">
-          <span className="text-black/60">Welcome to your Dashboard,</span>{" "}
+        <h1 className="font-display text-3xl font-bold tracking-tight text-foreground">
+          <span className="text-muted font-normal">Welcome to your Dashboard,</span>{" "}
           {userData.name}
         </h1>
-        <div className="flex items-center justify-center gap-6 text-lg">
+        <div className="flex items-center justify-center gap-4 text-base">
           <Link
             href={ROUTES.dashboard + "#sessions"}
             className={buttonVariants({
               variant: "primary",
-              className: "font-semibold",
+              className: "font-semibold rounded-full",
             })}
           >
-            <MoveDownIcon />
+            <MoveDownIcon className="size-4" />
             Attendance Sessions
           </Link>
           <DashboardCourseButton />
