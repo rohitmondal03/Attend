@@ -78,7 +78,7 @@ export function DashboardHeader({
 
   return (
     <>
-      <header className="fixed w-full top-0 left-0 py-4 px-10 border-b-2 border-default-foreground flex items-center justify-between bg-zinc-200 z-10">
+      <header className="fixed w-full top-0 left-0 py-3.5 px-6 sm:px-10 border-b border-border flex items-center justify-between bg-surface/85 backdrop-blur-md z-10">
         <Logo />
 
         <div className="flex items-center justify-center gap-6">

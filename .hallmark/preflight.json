@@ -1,0 +1,21 @@
+{
+  "scannedAt": "2026-10-18T07:23:00Z",
+  "framework": "Next.js 16.3.4 (App Router, package.json L27)",
+  "fontStack": {
+    "fonts": ["Figtree", "Changa_One", "Instrument_Serif"],
+    "citation": "app/layout.tsx L7-20",
+    "overrideRequested": true
+  },
+  "palette": {
+    "type": "HeroUI OKLCH tokens",
+    "accent": "oklch(82.00% 0.1200 155.00)",
+    "citation": "app/globals.css L18-49"
+  },
+  "motion": {
+    "library": "motion 13.2.0 + lenis 1.3.26",
+    "stance": "motion-on",
+    "citation": "package.json L24, L26"
+  },
+  "spacing": "Tailwind v4 (4-pt scale)",
+  "scope": "multi-page"
+}
