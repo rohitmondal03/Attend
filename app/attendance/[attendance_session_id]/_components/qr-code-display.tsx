@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Card } from "@heroui/react";
-import { QrCodeIcon, ClockIcon } from "lucide-react";
+import { QrCodeIcon, ClockIcon, TimerIcon } from "lucide-react";
+
+const QR_REFRESH_SECONDS = 15;
 
 interface QrCodeSectionProps {
   sessionId: string;
@@ -30,6 +32,24 @@ export function QrCodeDisplay({
     return `${formattedHours}:${formattedMinutes} ${amOrpm}`;
   }, [sessionStartTime]);
 
+  const [countdown, setCountdown] = useState(QR_REFRESH_SECONDS);
+  const countdownRef = useRef(QR_REFRESH_SECONDS);
+
+  const resetCountdown = useCallback(() => {
+    countdownRef.current = QR_REFRESH_SECONDS;
+    setCountdown(QR_REFRESH_SECONDS);
+  }, []);
+
+  // Countdown ticker — runs every second
+  useEffect(() => {
+    const tick = setInterval(() => {
+      countdownRef.current = Math.max(0, countdownRef.current - 1);
+      setCountdown(countdownRef.current);
+    }, 1000);
+    return () => clearInterval(tick);
+  }, []);
+
+  // QR code initialisation + refresh
   useEffect(() => {
     let cancelled = false;
     let interval: ReturnType<typeof setInterval> | undefined;
@@ -48,6 +68,8 @@ export function QrCodeDisplay({
       const url = await fetchUrl();
       if (cancelled || !url || !qrRef.current) return;
 
+      resetCountdown();
+
       qrInstanceRef.current = new QRCodeStyling({
         width: 300,
         height: 300,
@@ -64,8 +86,11 @@ export function QrCodeDisplay({
 
       interval = setInterval(async () => {
         const next = await fetchUrl();
-        if (next) qrInstanceRef.current?.update({ data: next });
-      }, 15_000);
+        if (next) {
+          qrInstanceRef.current?.update({ data: next });
+          resetCountdown();
+        }
+      }, QR_REFRESH_SECONDS * 1000);
     }
 
     initQR();
@@ -76,7 +101,7 @@ export function QrCodeDisplay({
       if (qrRef.current) qrRef.current.innerHTML = "";
       qrInstanceRef.current = null;
     };
-  }, [sessionId]);
+  }, [sessionId, resetCountdown]);
 
   return (
     <div className="flex flex-col items-center justify-center gap-6">
@@ -99,6 +124,18 @@ export function QrCodeDisplay({
             {sessionId.slice(0, 8)}...
           </span>
         </span>
+
+        <div className="flex items-center gap-2 rounded-full bg-foreground/5 px-4 py-2">
+          <TimerIcon className="size-4 text-primary" />
+          <span className="text-sm font-medium text-muted">Expires in</span>
+          <span
+            className={`font-mono text-lg font-bold tabular-nums ${
+              countdown <= 5 ? "text-red-500" : "text-primary"
+            }`}
+          >
+            {String(countdown).padStart(2, "0")}s
+          </span>
+        </div>
 
         <div className="rounded-2xl bg-white p-6 shadow-xl border-2 border-accent">
           <div ref={qrRef} className="flex items-center justify-center" />

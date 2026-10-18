@@ -2,8 +2,6 @@
 
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import { ROUTES } from "@/lib/routes";
 import { ERROR_MESSAGE } from "@/lib/error";
 
 export const signupwithEmailAction = async ({
@@ -23,7 +21,6 @@ export const signupwithEmailAction = async ({
         name,
       },
     })
-    .then(() => redirect(ROUTES.dashboard))
     .catch((error) => {
       throw new Error(error);
     });
@@ -43,7 +40,6 @@ export const loginwithEmailAction = async ({
         password,
       },
     })
-    .then(() => redirect(ROUTES.dashboard))
     .catch((error) => {
       throw new Error(error);
     });
@@ -54,7 +50,6 @@ export const signoutAction = async () => {
     .signOut({
       headers: await headers(),
     })
-    .then(() => redirect(ROUTES.signin))
     .catch(() => {
       throw new Error(ERROR_MESSAGE.signout);
     });

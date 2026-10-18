@@ -1,5 +1,5 @@
-import { CheckIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { CheckIcon } from "lucide-react";
 import { useState } from "react";
 import {
   Button,
@@ -16,7 +16,7 @@ import { loginwithEmailAction, signupwithEmailAction } from "@/actions/auth";
 import { ROUTES } from "@/lib/routes";
 
 export function AuthFormTab() {
-  const { push: redirect } = useRouter();
+  const router = useRouter();
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
@@ -30,19 +30,11 @@ export function AuthFormTab() {
 
     await signupwithEmailAction(formValues)
       .then(() => {
-        toast("Sign up successfull !", {
-          timeout: 4000,
-          variant: "success",
-        });
-
-        redirect(ROUTES.dashboard);
+        toast.success(<p className="font-bold">Signed Up Successfully</p>);
+        router.push(ROUTES.dashboard);
       })
-      .catch((error) => {
-        toast("Error", {
-          description: error.message,
-          timeout: 4000,
-          variant: "danger",
-        });
+      .catch((error: Error) => {
+        toast.danger(<p className="font-bold">{error.message}</p>);
       })
       .finally(() => {
         setIsLoading(false);
@@ -55,19 +47,11 @@ export function AuthFormTab() {
 
     await loginwithEmailAction(formValues)
       .then(() => {
-        toast("Login successfull !", {
-          timeout: 4000,
-          variant: "success",
-        });
-
-        redirect(ROUTES.dashboard);
+        toast.success(<p className="font-bold">Signed In Successfully</p>);
+        router.push(ROUTES.dashboard);
       })
-      .catch((error) => {
-        toast("Error", {
-          description: error.message,
-          timeout: 4000,
-          variant: "danger",
-        });
+      .catch((error: Error) => {
+        toast.danger(<p className="font-bold">{error.message}</p>);
       })
       .finally(() => {
         setIsLoading(false);

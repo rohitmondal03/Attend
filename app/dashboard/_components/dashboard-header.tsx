@@ -72,9 +72,10 @@ export function DashboardHeader({
     await signoutAction()
       .then(() => {
         toast.success(<p className="font-bold">Signed Out Successfully</p>);
+        redirect(ROUTES.signin);
       })
-      .catch((err) => {
-        toast.danger(<p className="font-bold">{err}</p>);
+      .catch((err: Error) => {
+        toast.danger(<p className="font-bold">{err.message}</p>);
       });
   };
 
