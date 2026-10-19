@@ -1,39 +1,43 @@
 import type { Metadata } from "next";
-import { Figtree, Changa_One, Instrument_Serif } from "next/font/google";
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { ReactLenis } from "lenis/react";
 import { ToastProvider } from "@heroui/react";
 import "./globals.css";
 
-const figtree = Figtree({
-  variable: "--font-figtree",
-  weight: ["300", "400", "600", "800"],
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
 });
 
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
-  weight: ["400"],
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const changaOne = Changa_One({
-  variable: "--font-changaone",
-  weight: ["400"],
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
-  title: "Attend",
-  description: "A attendance marking app for teachers & students",
+  title: "Attend — Real-Time QR Attendance System",
+  description: "Dynamic rotating QR codes for zero-proxy, paperless classroom attendance.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${figtree.className} ${changaOne.variable} ${instrumentSerif.variable} h-full antialiased bg-zinc-200`}
+      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} ${inter.className} h-full antialiased bg-background text-foreground`}
     >
-      <body className="min-h-full flex flex-col p-4">
+      <body className="min-h-full flex flex-col selection:bg-accent/20 selection:text-accent-foreground">
         <ReactLenis root>{children}</ReactLenis>
-        <ToastProvider placement="bottom end"  />
+        <ToastProvider placement="bottom end" />
       </body>
     </html>
   );
 }
+

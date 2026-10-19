@@ -62,22 +62,22 @@ export default function LoginPage() {
         <Link href={"/"} className={buttonVariants({ variant: "tertiary" })}>
           <MoveLeft /> Back to Home
         </Link>
-        <div className="space-y-4 text-center">
+        <div className="space-y-2 text-center">
           <motion.h1
-            className="text-4xl font-"
+            className="font-display text-3xl font-bold tracking-tight text-foreground"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ease: "easeInOut", duration: 0.5 }}
           >
-            Welcome to{" "}
-            <span className="font_changaone font-medium">Attend</span>
+            Welcome to <span className="text-accent">Attend</span>
           </motion.h1>
           <motion.p
+            className="text-sm text-muted"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ease: "easeInOut", duration: 0.5, delay: 0.2 }}
           >
-            A no-proxy & paperless attendance system
+            Dynamic token & paperless classroom attendance
           </motion.p>
         </div>
         <motion.div

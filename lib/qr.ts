@@ -5,7 +5,7 @@ export const generateToken = async (
   sessionId: string,
   qrSecret: string,
 ): Promise<string> => {
-  const timeWindow = Math.floor(Date.now() / 10000); // changes every 10 sec
+  const timeWindow = Math.floor(Date.now() / 15000); // changes every 10 sec
   const data = `${sessionId}:${timeWindow}`;
   const signature = crypto
     .createHmac("sha256", qrSecret)
@@ -36,7 +36,7 @@ export async function validateToken(
 
   if (signature !== expectedSig) return { valid: false }; // tampered or wrong secret
 
-  const currentWindow = Math.floor(Date.now() / 10000);
+  const currentWindow = Math.floor(Date.now() / 15000);
   const windowAge = currentWindow - parseInt(timeWindow);
 
   // Allow current window + maybe 1 window of grace (scanning takes a second)

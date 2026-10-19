@@ -78,7 +78,7 @@ export function CreateAttendanceSessionModal({
         return d;
       })(),
     })
-      .then((createdAttendanceSessionId) => {
+      .then(() => {
         toast.success("Attendance session created successfully");
       })
       .catch(() => toast.danger("Failed to create new attendance session"))

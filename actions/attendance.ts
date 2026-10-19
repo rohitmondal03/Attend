@@ -8,6 +8,7 @@ import { ATTENDANCE_SESSION_STATUS } from "@/prisma/generated/prisma/enums";
 import { ROUTES } from "@/lib/routes";
 import { getCurrentUser } from "./user";
 import { ERROR_MESSAGE } from "@/lib/error";
+import { validateToken } from "@/lib/qr";
 
 export const createNewAttendanceSessionAction = async ({
   classEndTime,
@@ -110,4 +111,45 @@ export const endAttendanceSessionAction = async ({
   });
 
   revalidatePath(ROUTES.dashboard);
+};
+
+export const markAttendanceAction = async ({
+  fullName,
+  rollNumber,
+  token,
+}: {
+  fullName: string;
+  rollNumber: string;
+  token: string;
+}) => {
+  const { valid, sessionId } = await validateToken(token);
+
+  if (!valid || !sessionId) {
+    throw new Error(ERROR_MESSAGE.invalidToken);
+  }
+
+  const attendanceSession = await prisma.attendanceSession.findFirst({
+    where: {
+      id: sessionId,
+    },
+    select: {
+      status: true,
+    },
+  });
+
+  if (!attendanceSession) {
+    throw new Error(ERROR_MESSAGE.attendanceSessionNotFound);
+  }
+
+  if (attendanceSession.status === ATTENDANCE_SESSION_STATUS.INACTIVE) {
+    throw new Error(ERROR_MESSAGE.attendanceSessionInactive);
+  }
+
+  await prisma.attendanceRecord.create({
+    data: {
+      attendanceSessionId: sessionId,
+      studentName: fullName,
+      rollNumber: rollNumber,
+    },
+  });
 };

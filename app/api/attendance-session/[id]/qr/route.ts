@@ -29,6 +29,8 @@ export async function GET(
   }
 
   const token = await generateToken(session.id, session.qrSecret);
+  console.log(token);
+  
 
   const origin =
     process.env.NODE_ENV === "development"
