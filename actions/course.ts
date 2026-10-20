@@ -5,16 +5,18 @@ import prisma from "@/lib/prisma";
 import { getCurrentUser } from "./user";
 import { ERROR_MESSAGE } from "@/lib/error";
 import { ROUTES } from "@/lib/routes";
+import {
+  addNewCourseSchema,
+  validateInput,
+  type AddNewCourseInput,
+} from "@/lib/zod";
 
-export const addNewCourseAction = async ({
-  courseName,
-  program,
-  semester,
-}: {
-  courseName: string;
-  program: string;
-  semester: number;
-}) => {
+export const addNewCourseAction = async (input: AddNewCourseInput) => {
+  const { courseName, program, semester } = validateInput(
+    addNewCourseSchema,
+    input,
+  );
+
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {

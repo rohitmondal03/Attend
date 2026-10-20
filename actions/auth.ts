@@ -2,47 +2,36 @@
 
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
+import {
+  loginSchema,
+  signupSchema,
+  validateInput,
+  type LoginInput,
+  type SignupInput,
+} from "@/lib/zod";
 import { ERROR_MESSAGE } from "@/lib/error";
 
-export const signupwithEmailAction = async ({
-  email,
-  password,
-  name,
-}: {
-  email: string;
-  password: string;
-  name: string;
-}) => {
-  await auth.api
-    .signUpEmail({
-      body: {
-        email,
-        password,
-        name,
-      },
-    })
-    .catch((error) => {
-      throw new Error(error);
-    });
+export const signupwithEmailAction = async (input: SignupInput) => {
+  const { email, name, password } = validateInput(signupSchema, input);
+
+  await auth.api.signUpEmail({
+    body: {
+      email,
+      password,
+      name,
+    },
+  });
 };
 
-export const loginwithEmailAction = async ({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-}) => {
-  await auth.api
-    .signInEmail({
-      body: {
-        email,
-        password,
-      },
-    })
-    .catch((error) => {
-      throw new Error(error);
-    });
+export const loginwithEmailAction = async (input: LoginInput) => {
+  const { email, password } = validateInput(loginSchema, input);
+
+  await auth.api.signInEmail({
+    body: {
+      email,
+      password,
+    },
+  });
 };
 
 export const signoutAction = async () => {

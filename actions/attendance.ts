@@ -7,20 +7,22 @@ import prisma from "@/lib/prisma";
 import { ATTENDANCE_SESSION_STATUS } from "@/prisma/generated/prisma/enums";
 import { ROUTES } from "@/lib/routes";
 import { getCurrentUser } from "./user";
+import {
+  createAttendanceSchema,
+  endAttendanceSessionSchema,
+  validateInput,
+  type CreateAttendanceInput,
+  type EndAttendanceSessionInput,
+} from "@/lib/zod";
 import { ERROR_MESSAGE } from "@/lib/error";
 import { validateToken } from "@/lib/qr";
 
-export const createNewAttendanceSessionAction = async ({
-  classEndTime,
-  classLocation,
-  classStartTime,
-  courseId,
-}: {
-  courseId: string;
-  classLocation: string;
-  classStartTime: Date;
-  classEndTime: Date;
-}) => {
+export const createNewAttendanceSessionAction = async (
+  input: CreateAttendanceInput,
+) => {
+  const { classEndTime, classLocation, classStartTime, courseId } =
+    validateInput(createAttendanceSchema, input);
+
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
@@ -76,30 +78,13 @@ export const getUserAttendanceSessionsAction = async () => {
   return attendanceSessions;
 };
 
-export const endAttendanceSessionAction = async ({
-  attendanceSessionId,
-}: {
-  attendanceSessionId: string;
-}) => {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    throw new Error(ERROR_MESSAGE.userNotPresent);
-  }
-
-  const attendanceSession = await prisma.attendanceSession.findUnique({
-    where: {
-      id: attendanceSessionId,
-    },
-  });
-
-  if (!attendanceSession) {
-    throw new Error(ERROR_MESSAGE.attendanceSessionNotFound);
-  }
-
-  if (attendanceSession.teacherId !== user.id) {
-    throw new Error(ERROR_MESSAGE.notAuthorize);
-  }
+export const endAttendanceSessionAction = async (
+  input: EndAttendanceSessionInput,
+) => {
+  const { attendanceSessionId } = validateInput(
+    endAttendanceSessionSchema,
+    input,
+  );
 
   await prisma.attendanceSession.update({
     where: {
