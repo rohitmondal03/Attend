@@ -6,18 +6,20 @@ import prisma from "@/lib/prisma";
 import { ATTENDANCE_SESSION_STATUS } from "@/prisma/generated/prisma/enums";
 import { ROUTES } from "@/lib/routes";
 import { getCurrentUser } from "./user";
+import {
+  createAttendanceSchema,
+  endAttendanceSessionSchema,
+  validateInput,
+  type CreateAttendanceInput,
+  type EndAttendanceSessionInput,
+} from "@/lib/zod";
 
-export const createNewAttendanceSessionAction = async ({
-  classEndTime,
-  classLocation,
-  classStartTime,
-  courseId,
-}: {
-  courseId: string;
-  classLocation: string;
-  classStartTime: Date;
-  classEndTime: Date;
-}) => {
+export const createNewAttendanceSessionAction = async (
+  input: CreateAttendanceInput,
+) => {
+  const { classEndTime, classLocation, classStartTime, courseId } =
+    validateInput(createAttendanceSchema, input);
+
   const currentUser = await getCurrentUser();
 
   const qrSecret = crypto.randomBytes(32).toString("hex");
@@ -65,11 +67,14 @@ export const getUserAttendanceSessionsAction = async () => {
   return attendanceSessions;
 };
 
-export const endAttendanceSessionAction = async ({
-  attendanceSessionId,
-}: {
-  attendanceSessionId: string;
-}) => {
+export const endAttendanceSessionAction = async (
+  input: EndAttendanceSessionInput,
+) => {
+  const { attendanceSessionId } = validateInput(
+    endAttendanceSessionSchema,
+    input,
+  );
+
   await prisma.attendanceSession.update({
     where: {
       id: attendanceSessionId,

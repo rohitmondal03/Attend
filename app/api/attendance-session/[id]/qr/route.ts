@@ -2,12 +2,23 @@ import prisma from "@/lib/prisma";
 import { generateToken } from "@/lib/qr";
 import { getCurrentUser } from "@/actions/user";
 import { ROUTES } from "@/lib/routes";
+import { attendanceSessionParamSchema, formatZodError } from "@/lib/zod";
 
 export async function GET(
   _req: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const { id } = await params;
+  const rawParams = await params;
+  const paramResult = attendanceSessionParamSchema.safeParse(rawParams);
+
+  if (!paramResult.success) {
+    return Response.json(
+      { error: formatZodError(paramResult.error) },
+      { status: 400 },
+    );
+  }
+
+  const { id } = paramResult.data;
 
   const authSession = await getCurrentUser();
   if (!authSession) {
