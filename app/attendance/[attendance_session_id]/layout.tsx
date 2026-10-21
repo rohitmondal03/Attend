@@ -3,7 +3,6 @@ import { type ReactNode } from "react";
 import { getCurrentUser } from "@/actions/user";
 import prisma from "@/lib/prisma";
 import { ROUTES } from "@/lib/routes";
-import { AttendanceHeader } from "./_components/attendance-header";
 
 interface AttendancePageLayoutProps {
   children: ReactNode;

@@ -1,0 +1,1 @@
+export const ATTENDANCE_SESSION_INTERVAL = 20_000;

@@ -31,12 +31,12 @@ export default async function AttendancePage({ params }: AttendancePageProps) {
       <InactiveSession sessionId={sessionId} />
     </div>
   ) : (
-    <div className="grid grid-cols-2 gap-12 w-full p-10 items-center justify-center">
+    <div className="grid grid-cols-2 gap-12 w-full p-10 items-start justify-center">
       <QrCodeDisplay
         sessionId={sessionId}
         sessionStartTime={sessionData.createdAt}
       />
-      <MarkedStudent />
+      <MarkedStudent sessionId={sessionId} />
     </div>
   );
 }

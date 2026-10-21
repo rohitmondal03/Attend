@@ -4,9 +4,7 @@ import { ArrowUpRightIcon } from "lucide-react";
 import { ROUTES } from "@/lib/routes";
 import { Logo } from "@/components/shared/logo";
 
-interface AttendanceHeaderProps {}
-
-export function AttendanceHeader(props: AttendanceHeaderProps) {
+export function AttendanceHeader() {
   return (
     <header className="fixed w-full top-0 left-0 py-6 px-10 border-b-2 border-default-foreground flex items-center justify-between bg-zinc-200 z-10">
       <Logo />

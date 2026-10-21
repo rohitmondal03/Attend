@@ -138,3 +138,45 @@ export const markAttendanceAction = async ({
     },
   });
 };
+
+export const getMarkedAttendeesAction = async ({
+  sessionId,
+}: {
+  sessionId: string;
+}) => {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    throw new Error(ERROR_MESSAGE.userNotPresent);
+  }
+
+  const attendanceSession = await prisma.attendanceSession.findFirst({
+    where: {
+      id: sessionId,
+      teacherId: user.id,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (!attendanceSession) {
+    throw new Error(ERROR_MESSAGE.attendanceSessionNotFound);
+  }
+
+  const markedAttendees = await prisma.attendanceRecord.findMany({
+    where: {
+      attendanceSessionId: sessionId,
+    },
+    select: {
+      studentName: true,
+      rollNumber: true,
+      markedAt: true,
+    },
+    orderBy: {
+      markedAt: "asc",
+    },
+  });
+
+  return markedAttendees;
+};
