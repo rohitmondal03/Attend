@@ -17,9 +17,9 @@ const DropdownPopover = dynamic(() =>
 const DropdownMenu = dynamic(() =>
   import("@heroui/react").then((mod) => mod.Dropdown.Menu),
 );
-const DropdownSection = dynamic(() =>
-  import("@heroui/react").then((mod) => mod.Dropdown.Section),
-);
+// const DropdownSection = dynamic(() =>
+//   import("@heroui/react").then((mod) => mod.Dropdown.Section),
+// );
 const DropdownItem = dynamic(() =>
   import("@heroui/react").then((mod) => mod.Dropdown.Item),
 );

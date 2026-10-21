@@ -36,7 +36,7 @@ export default function HomePage() {
   const [countdown, setCountdown] = useState(8);
   const [tokenSeed, setTokenSeed] = useState(1048);
   const [verifiedCount, setVerifiedCount] = useState(48);
-  const [attendeeIndex, setAttendeeIndex] = useState(2);
+  // const [attendeeIndex, setAttendeeIndex] = useState(2);
 
   // Live countdown and token rotation simulation
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function HomePage() {
         if (prev <= 1) {
           setTokenSeed((s) => s + 7);
           setVerifiedCount((c) => Math.min(c + 1, 62));
-          setAttendeeIndex((i) => (i + 1) % SIMULATED_ATTENDEES.length);
+          // setAttendeeIndex((i) => (i + 1) % SIMULATED_ATTENDEES.length);
           return 10;
         }
         return prev - 1;
@@ -68,7 +68,7 @@ export default function HomePage() {
               <span>Anti-Proxy QR Attendance System</span>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-8">
               <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-[1.08]">
                 Attendance at the speed of light.{" "}
                 <span className="text-accent underline decoration-accent/40 decoration-wavy underline-offset-8">
@@ -76,9 +76,9 @@ export default function HomePage() {
                 </span>
               </h1>
               <p className="max-w-xl text-base sm:text-lg text-muted leading-relaxed">
-                Project a dynamic, self-rotating QR code on your classroom screen.
-                Students scan directly from their mobile browser, submit their roll number,
-                and log presence in under three seconds.
+                Project a dynamic, self-rotating QR code on your classroom
+                screen. Students scan directly from their mobile browser, submit
+                their roll number, and log presence in under three seconds.
               </p>
             </div>
 
@@ -134,7 +134,9 @@ export default function HomePage() {
                       CS-302 • Algorithms
                     </span>
                   </div>
-                  <p className="text-[11px] font-mono text-muted">Room 402 • Lecture Hall</p>
+                  <p className="text-[11px] font-mono text-muted">
+                    Room 402 • Lecture Hall
+                  </p>
                 </div>
                 <div className="flex items-center gap-1.5 rounded-full border border-border bg-surface-secondary px-2.5 py-1 text-[11px] font-mono text-muted">
                   <UsersIcon className="size-3 text-accent" />
@@ -152,16 +154,58 @@ export default function HomePage() {
                     fill="currentColor"
                   >
                     {/* Corner Position Detection Patterns */}
-                    <rect x="5" y="5" width="26" height="26" rx="3" fill="#09090b" />
-                    <rect x="9" y="9" width="18" height="18" rx="1.5" fill="#ffffff" />
+                    <rect
+                      x="5"
+                      y="5"
+                      width="26"
+                      height="26"
+                      rx="3"
+                      fill="#09090b"
+                    />
+                    <rect
+                      x="9"
+                      y="9"
+                      width="18"
+                      height="18"
+                      rx="1.5"
+                      fill="#ffffff"
+                    />
                     <rect x="13" y="13" width="10" height="10" fill="#09090b" />
 
-                    <rect x="69" y="5" width="26" height="26" rx="3" fill="#09090b" />
-                    <rect x="73" y="9" width="18" height="18" rx="1.5" fill="#ffffff" />
+                    <rect
+                      x="69"
+                      y="5"
+                      width="26"
+                      height="26"
+                      rx="3"
+                      fill="#09090b"
+                    />
+                    <rect
+                      x="73"
+                      y="9"
+                      width="18"
+                      height="18"
+                      rx="1.5"
+                      fill="#ffffff"
+                    />
                     <rect x="77" y="13" width="10" height="10" fill="#09090b" />
 
-                    <rect x="5" y="69" width="26" height="26" rx="3" fill="#09090b" />
-                    <rect x="9" y="73" width="18" height="18" rx="1.5" fill="#ffffff" />
+                    <rect
+                      x="5"
+                      y="69"
+                      width="26"
+                      height="26"
+                      rx="3"
+                      fill="#09090b"
+                    />
+                    <rect
+                      x="9"
+                      y="73"
+                      width="18"
+                      height="18"
+                      rx="1.5"
+                      fill="#ffffff"
+                    />
                     <rect x="13" y="77" width="10" height="10" fill="#09090b" />
 
                     {/* Dynamic QR Bits changing with tokenSeed */}
@@ -172,19 +216,52 @@ export default function HomePage() {
                     <rect x="46" y="18" width="6" height="6" />
                     <rect x="56" y="18" width="6" height="6" />
 
-                    <rect x="36" y="36" width="6" height="6" fill={tokenSeed % 2 === 0 ? "#2563eb" : "#09090b"} />
-                    <rect x="46" y="36" width="6" height="6" fill={tokenSeed % 3 === 0 ? "#2563eb" : "#09090b"} />
+                    <rect
+                      x="36"
+                      y="36"
+                      width="6"
+                      height="6"
+                      fill={tokenSeed % 2 === 0 ? "#2563eb" : "#09090b"}
+                    />
+                    <rect
+                      x="46"
+                      y="36"
+                      width="6"
+                      height="6"
+                      fill={tokenSeed % 3 === 0 ? "#2563eb" : "#09090b"}
+                    />
                     <rect x="56" y="36" width="6" height="6" />
                     <rect x="66" y="36" width="6" height="6" />
-                    <rect x="76" y="36" width="6" height="6" fill={tokenSeed % 5 === 0 ? "#2563eb" : "#09090b"} />
+                    <rect
+                      x="76"
+                      y="36"
+                      width="6"
+                      height="6"
+                      fill={tokenSeed % 5 === 0 ? "#2563eb" : "#09090b"}
+                    />
 
                     <rect x="8" y="36" width="6" height="6" />
                     <rect x="18" y="36" width="6" height="6" />
                     <rect x="8" y="46" width="6" height="6" />
                     <rect x="18" y="46" width="6" height="6" />
 
-                    <rect x="36" y="46" width="26" height="26" rx="2" fill="#2563eb" opacity="0.12" />
-                    <rect x="44" y="54" width="10" height="10" rx="1" fill="#2563eb" />
+                    <rect
+                      x="36"
+                      y="46"
+                      width="26"
+                      height="26"
+                      rx="2"
+                      fill="#2563eb"
+                      opacity="0.12"
+                    />
+                    <rect
+                      x="44"
+                      y="54"
+                      width="10"
+                      height="10"
+                      rx="1"
+                      fill="#2563eb"
+                    />
 
                     <rect x="66" y="46" width="6" height="6" />
                     <rect x="76" y="46" width="6" height="6" />
@@ -209,14 +286,21 @@ export default function HomePage() {
                   <motion.div
                     className="absolute inset-x-2 h-0.5 bg-accent shadow-[0_0_8px_var(--color-accent)]"
                     animate={{ top: ["10%", "88%", "10%"] }}
-                    transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 2.4,
+                      ease: "easeInOut",
+                    }}
                   />
                 </div>
 
                 {/* Countdown & rotation indicator */}
                 <div className="mt-4 flex items-center justify-between w-full max-w-[200px] text-xs font-mono text-muted">
                   <div className="flex items-center gap-1.5">
-                    <RefreshCwIcon className="size-3 text-accent animate-spin" style={{ animationDuration: "6s" }} />
+                    <RefreshCwIcon
+                      className="size-3 text-accent animate-spin"
+                      style={{ animationDuration: "6s" }}
+                    />
                     <span>Token: #{tokenSeed}</span>
                   </div>
                   <span className="font-semibold text-foreground">
@@ -228,8 +312,12 @@ export default function HomePage() {
               {/* Live Attendee Stream Ticker */}
               <div className="space-y-2 border-t border-border/80 pt-3">
                 <div className="flex items-center justify-between text-[11px] font-mono text-muted">
-                  <span className="uppercase tracking-wider">Live Scan Feed</span>
-                  <span className="text-success font-semibold">● Streaming</span>
+                  <span className="uppercase tracking-wider">
+                    Live Scan Feed
+                  </span>
+                  <span className="text-success font-semibold">
+                    ● Streaming
+                  </span>
                 </div>
 
                 <div className="space-y-1.5">
@@ -245,10 +333,16 @@ export default function HomePage() {
                       >
                         <div className="flex items-center gap-2">
                           <CheckCircle2Icon className="size-3.5 text-success" />
-                          <span className="font-medium text-foreground">{student.name}</span>
-                          <span className="font-mono text-[10px] text-muted">({student.roll})</span>
+                          <span className="font-medium text-foreground">
+                            {student.name}
+                          </span>
+                          <span className="font-mono text-[10px] text-muted">
+                            ({student.roll})
+                          </span>
                         </div>
-                        <span className="font-mono text-[10px] text-muted">{student.time}</span>
+                        <span className="font-mono text-[10px] text-muted">
+                          {student.time}
+                        </span>
                       </motion.div>
                     ))}
                   </AnimatePresence>
@@ -260,7 +354,10 @@ export default function HomePage() {
       </section>
 
       {/* Operational Flow Section: 3 Clear Steps */}
-      <section id="how_it_works" className="border-t border-border bg-surface-secondary/30 py-20 lg:py-28">
+      <section
+        id="how_it_works"
+        className="border-t border-border bg-surface-secondary/30 py-20 lg:py-28"
+      >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-xl space-y-3">
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
@@ -270,7 +367,8 @@ export default function HomePage() {
               Built for speed in real classroom environments.
             </h2>
             <p className="text-sm text-muted leading-relaxed">
-              Eliminate ten minutes of chaotic roll-calls. Run the entire attendance check in 60 seconds without installing any native app.
+              Eliminate ten minutes of chaotic roll-calls. Run the entire
+              attendance check in 60 seconds without installing any native app.
             </p>
           </div>
 
@@ -279,7 +377,9 @@ export default function HomePage() {
             <div className="relative flex flex-col justify-between rounded-2xl border border-border bg-surface p-6 shadow-sm transition-all hover:border-accent/40">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-2xl font-bold text-accent">01</span>
+                  <span className="font-mono text-2xl font-bold text-accent">
+                    01
+                  </span>
                   <div className="flex size-9 items-center justify-center rounded-xl bg-accent/10 text-accent">
                     <LaptopIcon className="size-4" />
                   </div>
@@ -288,7 +388,9 @@ export default function HomePage() {
                   Teacher launches session
                 </h3>
                 <p className="text-xs text-muted leading-relaxed">
-                  Select your course and lecture. A dedicated attendance room opens with a large high-contrast QR display ready for the projector.
+                  Select your course and lecture. A dedicated attendance room
+                  opens with a large high-contrast QR display ready for the
+                  projector.
                 </p>
               </div>
               <div className="mt-6 border-t border-border/80 pt-3 font-mono text-[11px] text-muted">
@@ -300,7 +402,9 @@ export default function HomePage() {
             <div className="relative flex flex-col justify-between rounded-2xl border border-border bg-surface p-6 shadow-sm transition-all hover:border-accent/40">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-2xl font-bold text-accent">02</span>
+                  <span className="font-mono text-2xl font-bold text-accent">
+                    02
+                  </span>
                   <div className="flex size-9 items-center justify-center rounded-xl bg-accent/10 text-accent">
                     <RefreshCwIcon className="size-4" />
                   </div>
@@ -309,7 +413,9 @@ export default function HomePage() {
                   Cryptographic QR rotates
                 </h3>
                 <p className="text-xs text-muted leading-relaxed">
-                  The QR code automatically regenerates every few seconds with short-lived tokens. Anyone attempting to photograph and share it finds it expired instantly.
+                  The QR code automatically regenerates every few seconds with
+                  short-lived tokens. Anyone attempting to photograph and share
+                  it finds it expired instantly.
                 </p>
               </div>
               <div className="mt-6 border-t border-border/80 pt-3 font-mono text-[11px] text-muted">
@@ -321,7 +427,9 @@ export default function HomePage() {
             <div className="relative flex flex-col justify-between rounded-2xl border border-border bg-surface p-6 shadow-sm transition-all hover:border-accent/40">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-2xl font-bold text-accent">03</span>
+                  <span className="font-mono text-2xl font-bold text-accent">
+                    03
+                  </span>
                   <div className="flex size-9 items-center justify-center rounded-xl bg-accent/10 text-accent">
                     <SmartphoneIcon className="size-4" />
                   </div>
@@ -330,7 +438,9 @@ export default function HomePage() {
                   Students scan & verify
                 </h3>
                 <p className="text-xs text-muted leading-relaxed">
-                  Opening camera scans directly to a lightweight mobile web form. Students enter their roll number and name once, logging present in real time.
+                  Opening camera scans directly to a lightweight mobile web
+                  form. Students enter their roll number and name once, logging
+                  present in real time.
                 </p>
               </div>
               <div className="mt-6 border-t border-border/80 pt-3 font-mono text-[11px] text-muted">
@@ -342,7 +452,10 @@ export default function HomePage() {
       </section>
 
       {/* Anti-Proxy Security Deep-Dive Section */}
-      <section id="anti-proxy" className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:py-28">
+      <section
+        id="anti-proxy"
+        className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:py-28"
+      >
         <div className="rounded-3xl border border-border bg-surface p-8 sm:p-12 shadow-sm">
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
             <div className="space-y-4 lg:col-span-6">
@@ -354,10 +467,14 @@ export default function HomePage() {
                 Why static QR codes fail, and how Attend fixes it.
               </h2>
               <p className="text-sm text-muted leading-relaxed">
-                Most QR attendance tools generate a single static image. Students snap a photo, send it into a WhatsApp group, and absent peers mark attendance from dorms.
+                Most QR attendance tools generate a single static image.
+                Students snap a photo, send it into a WhatsApp group, and absent
+                peers mark attendance from dorms.
               </p>
               <p className="text-sm text-muted leading-relaxed">
-                Attend solves this with rotating short-lived cryptographic tokens. By the time a screenshot is taken, uploaded, and scanned by someone else, the token has already expired on the server.
+                Attend solves this with rotating short-lived cryptographic
+                tokens. By the time a screenshot is taken, uploaded, and scanned
+                by someone else, the token has already expired on the server.
               </p>
             </div>
 
@@ -369,7 +486,8 @@ export default function HomePage() {
                   <span>The Static QR Flaw (Other Apps)</span>
                 </div>
                 <p className="text-muted leading-relaxed">
-                  One static QR code for the entire 60 minutes. Proxies share screenshots freely across campus group chats.
+                  One static QR code for the entire 60 minutes. Proxies share
+                  screenshots freely across campus group chats.
                 </p>
               </div>
 
@@ -380,7 +498,9 @@ export default function HomePage() {
                   <span>The Attend Rotating Token Architecture</span>
                 </div>
                 <p className="text-muted leading-relaxed">
-                  Codes refresh dynamically with a configurable expiration window. Only students physically looking at the classroom projection screen can scan in time.
+                  Codes refresh dynamically with a configurable expiration
+                  window. Only students physically looking at the classroom
+                  projection screen can scan in time.
                 </p>
               </div>
             </div>
@@ -389,7 +509,10 @@ export default function HomePage() {
       </section>
 
       {/* Classroom Features Matrix */}
-      <section id="features" className="border-t border-border bg-surface-secondary/20 py-20 lg:py-28">
+      <section
+        id="features"
+        className="border-t border-border bg-surface-secondary/20 py-20 lg:py-28"
+      >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="text-center max-w-xl mx-auto space-y-3">
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
@@ -399,7 +522,8 @@ export default function HomePage() {
               Everything instructors need to run orderly classes.
             </h2>
             <p className="text-sm text-muted">
-              Designed around the exact workflow of university professors and educators.
+              Designed around the exact workflow of university professors and
+              educators.
             </p>
           </div>
 
@@ -408,9 +532,12 @@ export default function HomePage() {
               <div className="flex size-10 items-center justify-center rounded-xl bg-accent/10 text-accent">
                 <ShieldCheckIcon className="size-5" />
               </div>
-              <h3 className="font-display font-semibold text-foreground">Zero Proxy Cheating</h3>
+              <h3 className="font-display font-semibold text-foreground">
+                Zero Proxy Cheating
+              </h3>
               <p className="text-xs text-muted leading-relaxed">
-                Ephemerally signed QR payloads make forwarded screenshots instantly obsolete.
+                Ephemerally signed QR payloads make forwarded screenshots
+                instantly obsolete.
               </p>
             </div>
 
@@ -418,9 +545,12 @@ export default function HomePage() {
               <div className="flex size-10 items-center justify-center rounded-xl bg-accent/10 text-accent">
                 <RadioIcon className="size-5" />
               </div>
-              <h3 className="font-display font-semibold text-foreground">Live Telemetry</h3>
+              <h3 className="font-display font-semibold text-foreground">
+                Live Telemetry
+              </h3>
               <p className="text-xs text-muted leading-relaxed">
-                Watch student names, roll numbers, and timestamps appear live as each scan happens.
+                Watch student names, roll numbers, and timestamps appear live as
+                each scan happens.
               </p>
             </div>
 
@@ -428,9 +558,12 @@ export default function HomePage() {
               <div className="flex size-10 items-center justify-center rounded-xl bg-accent/10 text-accent">
                 <FileSpreadsheetIcon className="size-5" />
               </div>
-              <h3 className="font-display font-semibold text-foreground">Instant CSV Export</h3>
+              <h3 className="font-display font-semibold text-foreground">
+                Instant CSV Export
+              </h3>
               <p className="text-xs text-muted leading-relaxed">
-                Download structured spreadsheets formatted with date, session name, and roll numbers in one click.
+                Download structured spreadsheets formatted with date, session
+                name, and roll numbers in one click.
               </p>
             </div>
 
@@ -438,9 +571,12 @@ export default function HomePage() {
               <div className="flex size-10 items-center justify-center rounded-xl bg-accent/10 text-accent">
                 <SmartphoneIcon className="size-5" />
               </div>
-              <h3 className="font-display font-semibold text-foreground">Pure Browser Web</h3>
+              <h3 className="font-display font-semibold text-foreground">
+                Pure Browser Web
+              </h3>
               <p className="text-xs text-muted leading-relaxed">
-                Works on Safari, Chrome, Edge, and iOS/Android without requiring any app store downloads.
+                Works on Safari, Chrome, Edge, and iOS/Android without requiring
+                any app store downloads.
               </p>
             </div>
           </div>
@@ -460,7 +596,8 @@ export default function HomePage() {
           </h2>
 
           <p className="text-sm sm:text-base text-muted max-w-md mx-auto leading-relaxed">
-            Create an instructor account, add your courses, and project your first dynamic QR code today.
+            Create an instructor account, add your courses, and project your
+            first dynamic QR code today.
           </p>
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">

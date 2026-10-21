@@ -5,13 +5,13 @@ import { MarkedStudent } from "./_components/marked-student-table";
 import { InactiveSession } from "./_components/inactive-session";
 import { QrCodeDisplay } from "./_components/qr-code-display";
 
-export default async function AttendancePage({
-  params,
-}: {
+interface AttendancePageProps {
   params: Promise<{
     attendance_session_id: string;
   }>;
-}) {
+}
+
+export default async function AttendancePage({ params }: AttendancePageProps) {
   const { attendance_session_id: sessionId } = await params;
 
   const sessionData = await prisma.attendanceSession.findFirst({
@@ -20,6 +20,7 @@ export default async function AttendancePage({
     },
     select: {
       status: true,
+      createdAt: true,
     },
   });
 
@@ -30,9 +31,12 @@ export default async function AttendancePage({
       <InactiveSession sessionId={sessionId} />
     </div>
   ) : (
-    <div className="grid grid-cols-2 gap-12 w-full p-10 items-center justify-center">
-      <QrCodeDisplay sessionId={sessionId} />
-      <MarkedStudent />
+    <div className="grid grid-cols-2 gap-12 w-full p-10 items-start justify-center">
+      <QrCodeDisplay
+        sessionId={sessionId}
+        sessionStartTime={sessionData.createdAt}
+      />
+      <MarkedStudent sessionId={sessionId} />
     </div>
   );
 }

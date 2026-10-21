@@ -69,11 +69,14 @@ export function DashboardHeader({
 
   // Sign out user
   const signout = async () => {
-    await signoutAction().then(() => {
-      toast.success(<p className="font-bold">Signed Out Successfully</p>);
-
-      redirect(ROUTES.home);
-    });
+    await signoutAction()
+      .then(() => {
+        toast.success(<p className="font-bold">Signed Out Successfully</p>);
+        redirect(ROUTES.signin);
+      })
+      .catch((err: Error) => {
+        toast.danger(<p className="font-bold">{err.message}</p>);
+      });
   };
 
   return (

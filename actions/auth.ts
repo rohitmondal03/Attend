@@ -9,6 +9,7 @@ import {
   type LoginInput,
   type SignupInput,
 } from "@/lib/zod";
+import { ERROR_MESSAGE } from "@/lib/error";
 
 export const signupwithEmailAction = async (input: SignupInput) => {
   const { email, name, password } = validateInput(signupSchema, input);
@@ -34,7 +35,11 @@ export const loginwithEmailAction = async (input: LoginInput) => {
 };
 
 export const signoutAction = async () => {
-  await auth.api.signOut({
-    headers: await headers(),
-  });
+  await auth.api
+    .signOut({
+      headers: await headers(),
+    })
+    .catch(() => {
+      throw new Error(ERROR_MESSAGE.signout);
+    });
 };

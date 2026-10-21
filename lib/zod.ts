@@ -9,15 +9,15 @@ export const formatZodError = (error: z.ZodError): string => {
     .join(", ");
 };
 
-export const validateInput = <S extends { safeParse: (data: unknown) => { success: true; data: any } | { success: false; error: z.ZodError } }>(
+export const validateInput = <S extends z.ZodType>(
   schema: S,
   data: unknown,
-): S extends { safeParse: (data: unknown) => { success: true; data: infer D } | { success: false; error: z.ZodError } } ? D : never => {
+): z.output<S> => {
   const result = schema.safeParse(data);
   if (!result.success) {
     throw new Error(formatZodError(result.error));
   }
-  return result.data as any;
+  return result.data;
 };
 
 export const loginSchema = z.object({
@@ -39,10 +39,7 @@ export const createAttendanceSchema = z
   .object({
     classStartTime: z.coerce.date({ message: "Start time is required" }),
     classEndTime: z.coerce.date({ message: "End time is required" }),
-    classLocation: z
-      .string()
-      .trim()
-      .min(1, "Class location is required"),
+    classLocation: z.string().trim().min(1, "Class location is required"),
     courseId: z.uuid("Course is required"),
   })
   .refine((data) => data.classEndTime > data.classStartTime, {
@@ -87,5 +84,9 @@ export type LoginInput = z.input<typeof loginSchema>;
 export type SignupInput = z.input<typeof signupSchema>;
 export type CreateAttendanceInput = z.input<typeof createAttendanceSchema>;
 export type AddNewCourseInput = z.input<typeof addNewCourseSchema>;
-export type EndAttendanceSessionInput = z.input<typeof endAttendanceSessionSchema>;
-export type AttendanceSessionParam = z.input<typeof attendanceSessionParamSchema>;
+export type EndAttendanceSessionInput = z.input<
+  typeof endAttendanceSessionSchema
+>;
+export type AttendanceSessionParam = z.input<
+  typeof attendanceSessionParamSchema
+>;

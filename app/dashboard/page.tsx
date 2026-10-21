@@ -1,27 +1,43 @@
 import Link from "next/link";
-import { Chip, Card, Separator, buttonVariants } from "@heroui/react";
-import {
-  LayersIcon,
-  CalendarIcon,
-  ClockIcon,
-  BookOpenIcon,
-  EyeIcon,
-  MoveDownIcon,
-} from "lucide-react";
-import { formatDate } from "date-fns";
-import { ROUTES } from "@/lib/routes";
+import { Separator, buttonVariants } from "@heroui/react";
+import { MoveDownIcon } from "lucide-react";
 import { getCurrentUser } from "@/actions/user";
 import { getUserAttendanceSessionsAction } from "@/actions/attendance";
 import { DashboardCourseButton } from "./_components/dashboard-course-button";
 import { DashboardAttendanceSessionTable } from "./_components/dashboard-attendance-session-table";
+import { RecentSessionsCard } from "./_components/recent-sessions-card";
+import { WeeklySessionsCard } from "./_components/weekly-sessions-card";
+import { MonthlySessionsCard } from "./_components/monthly-sessions-card";
+import { TotalSessionsCard } from "./_components/total-sessions-card";
 
 export default async function DashboardPage() {
   const userData = await getCurrentUser();
 
-  // get user's attendance sessions, in desccendeding order of 'createdAt'
+  // get user's attendance sessions, in descending order of 'createdAt'
   const attendanceSessions = await getUserAttendanceSessionsAction();
 
   const latestSession = attendanceSessions[0];
+
+  const currentMonthSessions = attendanceSessions.filter((session) => {
+    return (
+      session.createdAt.getMonth() === new Date().getMonth() &&
+      session.createdAt.getFullYear() === new Date().getFullYear()
+    );
+  });
+
+  const currentWeekSessions = attendanceSessions.filter((session) => {
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    start.setDate(
+      start.getDate() - (start.getDay() === 0 ? 6 : start.getDay() - 1),
+    );
+
+    const end = new Date();
+    end.setHours(23, 59, 59, 999);
+    end.setDate(start.getDate() + 6);
+
+    return session.createdAt >= start && session.createdAt <= end;
+  });
 
   return (
     <div className="space-y-12">
@@ -32,7 +48,7 @@ export default async function DashboardPage() {
         </h1>
         <div className="flex items-center justify-center gap-4 text-base">
           <Link
-            href={ROUTES.dashboard + "#sessions"}
+            href={"#sessions"}
             className={buttonVariants({
               variant: "primary",
               className: "font-semibold rounded-full",
@@ -47,110 +63,14 @@ export default async function DashboardPage() {
 
       {/* Overview Cards */}
       <section className="grid grid-cols-4 gap-4">
-        {/* Card 1 – Total Sessions */}
-        <Card className="flex h-full flex-col justify-between">
-          <Card.Header>
-            <div className="mb-3 flex size-10 items-center justify-center rounded-lg bg-accent/40">
-              <LayersIcon className="text-primary size-5" aria-hidden="true" />
-            </div>
-            <Card.Title className="text-base font-semibold">
-              Total Sessions
-            </Card.Title>
-            <Card.Description>
-              All attendance sessions you&apos;ve ever created.
-            </Card.Description>
-          </Card.Header>
-          <Card.Footer className="flex w-full items-center justify-between border-t pt-3">
-            <span className="text-primary text-3xl font-bold">45</span>
-            <Chip color="success" className="font-semibold">
-              ↑ All Time
-            </Chip>
-          </Card.Footer>
-        </Card>
-
-        {/* Card 2 – This Month's Sessions */}
-        <Card className="flex h-full flex-col justify-between">
-          <Card.Header>
-            <div className="mb-3 flex size-10 items-center justify-center rounded-lg bg-accent/40">
-              <CalendarIcon
-                className="text-primary size-5"
-                aria-hidden="true"
-              />
-            </div>
-            <Card.Title className="text-base font-semibold">
-              Sessions This Month
-            </Card.Title>
-            <Card.Description>
-              Attendance sessions held in the current calendar month.
-            </Card.Description>
-          </Card.Header>
-          <Card.Footer className="flex w-full items-center justify-between border-t pt-3">
-            <span className="text-primary text-3xl font-bold">10</span>
-            <Chip color="danger" className="font-semibold">
-              ↑ This Month
-            </Chip>
-          </Card.Footer>
-        </Card>
-
-        {/* Card 3 – This Week's Sessions */}
-        <Card className="flex h-full flex-col justify-between">
-          <Card.Header>
-            <div className="mb-3 flex size-10 items-center justify-center rounded-lg bg-accent/40">
-              <ClockIcon className="text-primary size-5" aria-hidden="true" />
-            </div>
-            <Card.Title className="text-base font-semibold">
-              Sessions This Week
-            </Card.Title>
-            <Card.Description>
-              Sessions conducted since the start of this week.
-            </Card.Description>
-          </Card.Header>
-          <Card.Footer className="flex w-full items-center justify-between border-t pt-3">
-            <span className="text-primary text-3xl font-bold">3</span>
-            <Chip color="danger" className="font-semibold">
-              ↑ This Week
-            </Chip>
-          </Card.Footer>
-        </Card>
-
-        {/* Card 4 – Most Recent Session */}
-        <Card className="flex flex-col justify-between">
-          <Card.Header>
-            <div className="mb-3 flex size-10 items-center justify-center rounded-lg bg-accent/40">
-              <BookOpenIcon
-                className="text-primary size-5"
-                aria-hidden="true"
-              />
-            </div>
-            <Card.Title className="text-base font-semibold">
-              Most Recent Session
-            </Card.Title>
-            <Card.Description>
-              The last session you ran — jump back in quickly.
-            </Card.Description>
-          </Card.Header>
-          <Card.Footer>
-            {latestSession ? (
-              <Link
-                aria-label="View most recent session: Maths, B.Tech 3rd Sem"
-                href={ROUTES.attendance({ sessionId: latestSession.id })}
-                className="flex gap-4 w-full items-center justify-between rounded-lg px-3 py-2 transition-colors bg-accent/30 hover:bg-accent/50"
-              >
-                <span className="text-xs">
-                  {latestSession.course.courseName} on{" "}
-                  <span className="font-semibold">
-                    {formatDate(latestSession.classStartTime, "dd MMM yyyy")}
-                  </span>
-                </span>
-                <EyeIcon className="text-primary size-4 shrink-0" />
-              </Link>
-            ) : (
-              <p className="w-full py-2 px-3 text-center text-danger bg-danger-soft rounded-xl">
-                No Sessions Found
-              </p>
-            )}
-          </Card.Footer>
-        </Card>
+        <TotalSessionsCard
+          totalAttendanceSessions={attendanceSessions.length}
+        />
+        <MonthlySessionsCard
+          currentMonthSessions={currentMonthSessions.length}
+        />
+        <WeeklySessionsCard currentWeekSessions={currentWeekSessions.length} />
+        <RecentSessionsCard latestSession={latestSession} />
       </section>
 
       <Separator orientation="horizontal" className="bg-accent-foreground" />
