@@ -24,17 +24,17 @@ export default async function AttendancePageLayout({
     where: {
       id: attendanceSessionId,
     },
+    select: {
+      status: true,
+      teacherId: true,
+    },
   });
 
-  if (!attendanceSessionData) {
-    return notFound();
-  }
+  if (!attendanceSessionData) return notFound();
+  if (attendanceSessionData.status === "INACTIVE") return notFound();
 
   const { id: userId } = await getCurrentUser();
-
-  if (userId !== attendanceSessionData.teacherId) {
-    redirect(ROUTES.signin);
-  }
+  if (userId !== attendanceSessionData.teacherId) redirect(ROUTES.signin);
 
   return <main>{children}</main>;
 }
