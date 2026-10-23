@@ -1,7 +1,5 @@
 import { MarkAttendanceHeader } from "../_components/mark-attendance-header";
 import { MarkAttendanceForm } from "../_components/mark-attendance-form";
-import { validateToken } from "@/lib/qr";
-import { redirect } from "next/navigation";
 
 interface MarkAttendancePageProps {
   params: Promise<{
@@ -13,12 +11,6 @@ export default async function MarkAttendancePage({
   params,
 }: MarkAttendancePageProps) {
   const { token } = await params;
-
-  const { valid, sessionId } = await validateToken(token);
-
-  if (!valid || !sessionId) {
-    redirect("/not-found");
-  }
 
   return (
     <main className="min-h-screen flex flex-col justify-between">

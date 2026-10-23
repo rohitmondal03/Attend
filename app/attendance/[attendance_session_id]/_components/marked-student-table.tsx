@@ -1,11 +1,11 @@
 "use client";
 
-import { Card, Chip, Table } from "@heroui/react";
-import { UsersIcon } from "lucide-react";
+import { Button, Card, Chip, Table } from "@heroui/react";
+import { Loader2Icon, UsersIcon, RotateCcwIcon } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { formatDate } from "date-fns";
 import { getMarkedAttendeesAction } from "@/actions/attendance";
-import { ATTENDANCE_SESSION_INTERVAL } from "@/lib/constants";
+import { MARKED_STUDENT_POLL_INTERVAL } from "@/lib/constants";
 
 interface MarkedStudentProps {
   sessionId: string;
@@ -16,10 +16,11 @@ export function MarkedStudent({ sessionId }: MarkedStudentProps) {
     data: markedAttendees,
     isFetching,
     isError,
+    refetch,
   } = useQuery({
     queryKey: ["attendance", "marked-students", sessionId],
     queryFn: async () => await getMarkedAttendeesAction({ sessionId }),
-    refetchInterval: 5_000,
+    refetchInterval: MARKED_STUDENT_POLL_INTERVAL,
   });
 
   return (
@@ -56,6 +57,22 @@ export function MarkedStudent({ sessionId }: MarkedStudentProps) {
                   <Table.Column isRowHeader>Marked At</Table.Column>
                 </Table.Header>
                 <Table.Body>
+                  {isError && (
+                    <Table.Row>
+                      <Table.Cell>{null}</Table.Cell>
+                      <Table.Cell>
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          onPress={() => refetch()}
+                        >
+                          <RotateCcwIcon />
+                          Retry
+                        </Button>
+                      </Table.Cell>
+                      <Table.Cell>{null}</Table.Cell>
+                    </Table.Row>
+                  )}
                   {markedAttendees.length === 0 ? (
                     <Table.Row>
                       <Table.Cell>---</Table.Cell>
@@ -76,6 +93,19 @@ export function MarkedStudent({ sessionId }: MarkedStudentProps) {
                         </Table.Cell>
                       </Table.Row>
                     ))
+                  )}
+                  {isFetching && (
+                    <Table.Row>
+                      <Table.Cell>
+                        <Loader2Icon className="size-4 animate-spin" />
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Loader2Icon className="size-4 animate-spin" />
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Loader2Icon className="size-4 animate-spin" />
+                      </Table.Cell>
+                    </Table.Row>
                   )}
                 </Table.Body>
               </Table.Content>
